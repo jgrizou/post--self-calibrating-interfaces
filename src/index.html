@@ -1,0 +1,66 @@
+<!doctype html>
+<meta charset="utf-8">
+<script src="https://distill.pub/template.v1.js"></script>
+
+<script type="text/front-matter">
+  title: "Article Title"
+  description: "Description of the post"
+  authors:
+  - Jonathan Grizou: https://jgrizou.com
+  affiliations:
+  - / CRI Paris: https://cri-paris.org
+</script>
+
+<dt-article class="centered">
+  <h1>Interactive introduction to self-calibrating interfaces</h1>
+  <h2>A self-calibrating interface can identify what you are trying to do without knowing how you are trying to do it. We showcase such an interface and visualize how it works.</h2>
+
+  <dt-byline></dt-byline>
+
+  <p>This is the first paragraph of the article.</p>
+  
+  <p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> external publications.</p>
+
+  <include src="src/components/test.html"></include>
+
+  <include src="src/components/test.css"></include>
+
+  <dt-code block language="javascript">
+    var x = 25;
+    function(x){
+      return x * x;
+    }
+  </dt-code>
+
+
+  <!-- <d-math>c = \sum_0^i{x}</d-math> -->
+
+</dt-article>
+
+<dt-appendix>
+
+  <h3>Acknowledgments</h3>
+  <p>
+    We are deeply grateful to...
+  </p>
+
+  <p>
+    Many of our diagrams are based on...
+  </p>
+
+  <h3>Author Contributions</h3>
+  <p>
+    <b>Research:</b> Alex developed ...
+  </p>
+
+  <p>
+    <b>Writing & Diagrams:</b> The text was initially drafted by...
+  </p>
+
+
+  <d-footnote-list></d-footnote-list>
+  <d-citation-list></d-citation-list>
+
+</dt-appendix>
+
+<include src="src/components/references.bib"></include>

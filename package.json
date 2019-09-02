@@ -1,0 +1,26 @@
+{
+  "name": "DistillOpenVaultArticle",
+  "version": "1.0.0",
+  "description": "Interactive paper on self-calibrating interfaces",
+  "main": "src/index.html",
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "parcel build src/index.html",
+    "predev": "rm -rf dist",
+    "dev": "parcel src/index.html"
+  },
+  "staticFiles": {
+    "staticPath": "src/static",
+    "watcherGlob": "**"
+  },
+  "author": "Jonathan Grizou",
+  "license": "ISC",
+  "dependencies": {
+    "include": "^1.1.0"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.3",
+    "parcel-plugin-static-files-copy": "^2.0.0",
+    "posthtml-include": "^1.2.0"
+  }
+}
