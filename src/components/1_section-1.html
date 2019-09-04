@@ -1,0 +1,81 @@
+<a id="section-1"></a>
+<h2>The PIN-entering interface</h2>
+
+<p>Our interface is designed for user to type a PIN. It is just like when you go to an ATM to get cash out and are asked to type your secret PIN. But here, instead of typing directly on the digits, you have to answer a question from the machine.</p>
+
+<p>The interface (<a href="#figure-1">Figure 1</a>) is showing all possible digits (from 0 to 9) each colored in one of two colors (yellow or grey). Think of it as asking you: "What color is your digit?"<dt-fn>The current digit considered by the machine is indicated by the dark frame around it. See top-left part of <a href="#figure-1">Figure 1</a>.</dt-fn>. You look at the digit you want to enter and answer: "My digit is yellow/grey" by clicking on the button with the corresponding color.</p>
+
+<p>For example, in <a href="#figure-1">Figure 1</a>, the machine asks you the color of the first digit of your PIN<dt-fn>Indicated by the dark frame around the left most digit in the top of <a href="#figure-1">Figure 1</a></dt-fn>. If you wanted to type a '1', you would click on the grey button because the digit '1' is colored in grey by the machine.</p>
+
+<figure id="figure-1">
+  <figcaption>
+    <p><a href="#figure-1">Figure 1</a>: The interface can be broken down in three parts. Top: the display for each of the 4-digit PIN. Middle: The digit from 0 to 9 colored in either yellow or grey. The machine decides of the colors. Bottom: The user's area. The user has access to two buttons, yellow or grey, to tell the machine which color is the digit they have in mind.</p>
+  </figcaption>
+  <div class="container">
+    <div class="row align-items-center justify-content-center">
+      <div class="col-lg-6 col-md-8 col-sm-10 col-12 nopadding">
+        <img src="./media/interface_zones.png" class="img-fluid">
+      </div>
+    </div>
+  </div>
+</figure>
+
+<p>Because the machine decides the colors to apply on each digits, when you click on the grey button, it can immediatly discard half of the digits (all the yellow ones). By repeating the process 3 or 4 times, it can identify with certainty your first digit, and move to the second one.</p>
+
+<p>Let's try it out. We will come back to the technical details right after. Below is  </p>
+
+
+<figure id="interaction-1">
+  <figcaption>
+    <p><a href="#interaction-1">Interaction 1</a>: .</p>
+  </figcaption>
+  <div class="container">
+    <div class="row align-items-center justify-content-center">
+
+      <script>
+        function load_1x2_vault() {
+          document.getElementById('vault-loader-container-1x2').innerHTML = '<div class="resp-div vault"><iframe class="resp-iframe" src="https://openvault.jgrizou.com/#/ui/demo_1x2.json"></iframe></div>';
+        }
+      </script>
+
+      <div class="col-lg-4 col-md-5 col-sm-8 col-10 nopadding">
+        <div id="vault-loader-container-1x2">
+
+            <div class="vault-loader-panel">
+              <img src="./media/vault_loader_1x2.png">
+              <button type="button" class="btn btn-secondary btn-lg" onclick="load_1x2_vault()">Click to load</button>
+            </div>
+
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-7 col-sm-8 col-10 nopadding">
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item"
+            src="https://www.youtube.com/embed/DsqyD3eKX3E?start=0&rel=0"
+            allowfullscreen>
+            </iframe>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</figure>
+
+
+
+
+
+
+<p>Talk of intent, meaning and behavior</p>
+<p>Give exemple in picture</p>
+<p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> external publications.</p>
+
+
+
+figure of the three areas of the interface
+
+explaining the function that are below
+- f(user, context) -> action
+- f(action)-> meaning
+- f(context,meaning)-> intent
