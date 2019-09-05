@@ -6,45 +6,49 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <include src="src/components/style.css"></include>
+    <script src="https://distill.pub/template.v2.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="./components/style.css">
 
-    <script src="https://distill.pub/template.v1.js"></script>
-
-    <script type="text/front-matter">
-      title: "Title"
-      description: "Description"
-      authors:
-      - Jonathan Grizou: https://jgrizou.com
-      affiliations:
-      - Center for Research and Interdisciplinarity: https://cri-paris.org
-    </script>
   </head>
 
   <body>
-    <dt-article>
 
+    <d-front-matter>
+      <script type="application/json">{
+        "title": "Title",
+        "description": "Description",
+        "password": "toto",
+        "authors": [
+          {
+            "author": "Jonathan Grizou",
+            "authorURL": "https://jgrizou.com",
+            "affiliation": "Center for Research and Interdisciplinarity",
+            "affiliationURL": "https://cri-paris.org"
+          }
+        ]
+      }</script>
+    </d-front-matter>
+
+    <d-title>
       <h1>Interactive introduction to self-calibrating interfaces</h1>
 
-      <h2>A self-calibrating interface can identify what you are trying to do without knowing how you are trying to do it. That surely sounds strange, if not suspicious, but you will discover one in this article and visualise how it works.</h2>
+      <p>A self-calibrating interface can identify what you are trying to do without knowing how you are trying to do it. You will discover one in this article and visualise how it works.</p>
 
-      <dt-byline></dt-byline>
+    </d-title>
+
+    <d-article>
 
       <include src="src/components/0_introduction.html"></include>
-      <hr>
       <include src="src/components/1_section-1.html"></include>
-      <hr>
       <include src="src/components/2_section-2.html"></include>
-      <hr>
       <include src="src/components/3_section-3.html"></include>
-      <hr>
       <include src="src/components/4_section-4.html"></include>
-      <hr>
       <include src="src/components/5_discussions.html"></include>
 
-    </dt-article>
+    </d-article>
 
-    <dt-appendix>
+    <d-appendix>
 
       <h3>Acknowledgments</h3>
       <p>
@@ -68,9 +72,9 @@
       <d-footnote-list></d-footnote-list>
       <d-citation-list></d-citation-list>
 
-    </dt-appendix>
+    </d-appendix>
 
-    <include src="src/components/references.bib"></include>
+    <d-bibliography src="./references.bib"></d-bibliography>
 
   </body>
 

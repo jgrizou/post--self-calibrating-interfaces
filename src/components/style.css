@@ -1,4 +1,8 @@
-<style>
+.note {
+  font-size: 13px;
+  font-style: italic;
+}
+
 
 :root {
   --border-color: rgba(0, 0, 0, 1);
@@ -22,6 +26,7 @@
   border-width: 2px;
   border-color: black;
   border-style: solid;
+  cursor: pointer;
 }
 
 .vault-loader-panel button {
@@ -57,5 +62,3 @@
 .hood {
   padding-top: var(--padding-top-hood);
 }
-
-</style>

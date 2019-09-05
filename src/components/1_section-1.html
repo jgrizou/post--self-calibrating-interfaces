@@ -1,81 +1,45 @@
 <a id="section-1"></a>
 <h2>The PIN-entering interface</h2>
 
-<p>Our interface is designed for user to type a PIN. It is just like when you go to an ATM to get cash out and are asked to type your secret PIN. But here, instead of typing directly on the digits, you have to answer a question from the machine.</p>
+<p>Our interface is designed for a user to type a PIN. It is just like when you go to an ATM to get cash out and are asked to type your secret PIN. The only difference is that instead of typing directly on the digits, you have to answer a question from the machine about your digit.</p>
 
-<p>The interface (<a href="#figure-1">Figure 1</a>) is showing all possible digits (from 0 to 9) each colored in one of two colors (yellow or grey). Think of it as asking you: "What color is your digit?"<dt-fn>The current digit considered by the machine is indicated by the dark frame around it. See top-left part of <a href="#figure-1">Figure 1</a>.</dt-fn>. You look at the digit you want to enter and answer: "My digit is yellow/grey" by clicking on the button with the corresponding color.</p>
+<p>The interface (<a href="#figure-1">Figure 1</a>) is showing all digits from 0 to 9 each colored in one of two colors (yellow or grey). Think of the machine as asking you: "What color is your digit?"<d-footnote>The current digit considered by the machine is indicated by the dark frame around it. See top-left part of <a href="#figure-1">Figure 1</a>.</d-footnote>. You look at the digit you want to enter and answer: "My digit is yellow/grey" by clicking on the button with the corresponding color.</p>
 
-<p>For example, in <a href="#figure-1">Figure 1</a>, the machine asks you the color of the first digit of your PIN<dt-fn>Indicated by the dark frame around the left most digit in the top of <a href="#figure-1">Figure 1</a></dt-fn>. If you wanted to type a '1', you would click on the grey button because the digit '1' is colored in grey by the machine.</p>
+<p>For example, in <a href="#figure-1">Figure 1</a>, the machine asks you the color of the first digit of your PIN<d-footnote>Indicated by the dark frame around the left most digit in the top of <a href="#figure-1">Figure 1</a></d-footnote>. If you wanted to type a '1', you would click on the grey button because the digit '1' is colored in grey by the machine.</p>
 
-<figure id="figure-1">
-  <figcaption>
-    <p><a href="#figure-1">Figure 1</a>: The interface can be broken down in three parts. Top: the display for each of the 4-digit PIN. Middle: The digit from 0 to 9 colored in either yellow or grey. The machine decides of the colors. Bottom: The user's area. The user has access to two buttons, yellow or grey, to tell the machine which color is the digit they have in mind.</p>
-  </figcaption>
-  <div class="container">
-    <div class="row align-items-center justify-content-center">
-      <div class="col-lg-6 col-md-8 col-sm-10 col-12 nopadding">
-        <img src="./media/interface_zones.png" class="img-fluid">
-      </div>
-    </div>
-  </div>
-</figure>
+<include src="src/figures/interface_breakdown.html"></include>
 
-<p>Because the machine decides the colors to apply on each digits, when you click on the grey button, it can immediatly discard half of the digits (all the yellow ones). By repeating the process 3 or 4 times, it can identify with certainty your first digit, and move to the second one.</p>
+<p>Because the machine knows which colors are applied on the digits<d-footnote>Curious minds might be asking themselves about the planning aspects, which is how the machine decides what colors to apply on the digits. It is indeed a very stimulating problem but let's put it on the side for now. We will discuss planning in section 5.</d-footnote>, when you click on the grey button, it can immediatly discard half of the digits (all the yellow ones). By repeating the process 3 or 4 times, it can identify with certainty your first digit, and move to the second one.</p>
 
-<p>Let's try it out. We will come back to the technical details right after. Below is  </p>
+<p>Let's try it out. We will come back to the technical details right after. Below is our interface along with a step-by-step video detailing how to use it. Try entering a 4-digit PIN of your choice.</p>
 
+<include src="src/figures/vault_1x2.html"></include>
 
-<figure id="interaction-1">
-  <figcaption>
-    <p><a href="#interaction-1">Interaction 1</a>: .</p>
-  </figcaption>
-  <div class="container">
-    <div class="row align-items-center justify-content-center">
+<p>You now fully understand the principle of interaction between you and this machine. If you have a background in computer science, you probably know how to implement this at home. But before moving to the self-calibrating version of this interface, let us highlight the various components at play and visually explain how this version works for everyone to understand.</p>
 
-      <script>
-        function load_1x2_vault() {
-          document.getElementById('vault-loader-container-1x2').innerHTML = '<div class="resp-div vault"><iframe class="resp-iframe" src="https://openvault.jgrizou.com/#/ui/demo_1x2.json"></iframe></div>';
-        }
-      </script>
+<p>First, we should name three distinct components:</p>
 
-      <div class="col-lg-4 col-md-5 col-sm-8 col-10 nopadding">
-        <div id="vault-loader-container-1x2">
+<ul>
+  <li>The user's <b>intent</b> is what the user wants the machine to do. Here entering specific digits.</li>
+  <li>The user's <b>meaning</b> is what the user wants to say to the machine. Here it is either: "My digit is yellow" or "My digit is grey".</li>
+  <li>The user's <b>action</b> is what the user does in order to express  their meaning. Here user's actions are to press buttons.</li>
+</ul>
 
-            <div class="vault-loader-panel">
-              <img src="./media/vault_loader_1x2.png">
-              <button type="button" class="btn btn-secondary btn-lg" onclick="load_1x2_vault()">Click to load</button>
-            </div>
+<p>In short, an action conveys a meaning that is used to infer an intent. But infering the intent from a meaning requires a bit of context. In our case, the context is a user wanting to type a PIN via our interface. Hence we know:</p>
 
-        </div>
-      </div>
+<ul>
+  <li>The user is here to type a PIN one digit at a time. Hence the intent of the user is one of the ten possible digits.</li>
+  <li>The principle of interaction is for the user to provide feedback about color of the digit they want to type. In other words, the possible meanings are yellow or grey.</li>
+  <li>The user can perform one of two actions, pressing either the left or the right button.</li>
+  <li>The <b>mapping between the user's actions and their meanings</b>. Pressing the left button conveys the meaning yellow and the right button conveys the meaning grey.</li>
+</ul>
 
-      <div class="col-lg-6 col-md-7 col-sm-8 col-10 nopadding">
-        <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item"
-            src="https://www.youtube.com/embed/DsqyD3eKX3E?start=0&rel=0"
-            allowfullscreen>
-            </iframe>
-        </div>
-      </div>
+<p>The latter is the most important to our story, it explicits that there is a pre-existing shared understanding between the user and the machine on the meaning conveyed by the pressing of each buttons. It is that assumption that we will relax in the next section.</p>
 
-    </div>
-  </div>
-</figure>
+<p>But for now the machine can follow this simple reasoning: "If the user presses the yellow button, then we can discard all the grey digits". To be precise, we should better say: "If the user presses the yellow button, then they mean that their digit is currently yellow, thus we can discard all the grey digits."</p>
 
+<p>You can visualize this process directly on the interface below that displays a dedicated side panel showing the inner workings of the machine. As before, a tutorial video is available.</p>
 
+<include src="src/figures/hood_1x2.html"></include>
 
-
-
-
-<p>Talk of intent, meaning and behavior</p>
-<p>Give exemple in picture</p>
-<p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> external publications.</p>
-
-
-
-figure of the three areas of the interface
-
-explaining the function that are below
-- f(user, context) -> action
-- f(action)-> meaning
-- f(context,meaning)-> intent
+<p>You now have a clear understanding of how this simple PIN-entering interface works. In the next section, you will discover the self-calibrating version of this interface in which buttons have no pre-defined colors. You will get to decide the colors of each buttons in your mind and never explicitly tell the machine about it. The machine will nonetheless be able to enter your PIN.</p>

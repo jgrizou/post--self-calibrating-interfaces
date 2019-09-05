@@ -1,0 +1,37 @@
+<figure id="explanation-1">
+  <figcaption>
+    <a href="#explanation-1">Explanation 1</a>: The interface with buttons of known colors with a side panel showing how it works. Left/top: the interface, click on it to load it. Right/bottom: a video explaining how it works. <a href="https://openvault.jgrizou.com/#/ui/tuto_1x2.json">Click here</a> to access the interface full screen.
+  </figcaption>
+  <div class="container">
+    <div class="row align-items-center justify-content-center">
+
+      <script>
+        function load_1x2_hood() {
+          document.getElementById('hood-loader-container-1x2').innerHTML = '<div class="resp-div hood"><iframe class="resp-iframe" src="https://openvault.jgrizou.com/#/ui/tuto_1x2.json"></iframe></div>';
+        }
+      </script>
+
+      <div class="col-lg-6 col-md-6 col-sm-8 col-10 nopadding">
+        <div id="hood-loader-container-1x2">
+
+            <div class="vault-loader-panel">
+              <img src="./media/hood_loader_1x2.png" onclick="load_1x2_hood()">
+              <button type="button" class="btn btn-secondary btn-lg" onclick="load_1x2_hood()">Click to load</button>
+            </div>
+
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-8 col-10 nopadding">
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item"
+            src="https://www.youtube.com/embed/xP3qJ1V28Ws?start=0&rel=0"
+            allowfullscreen>
+            </iframe>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</figure>
