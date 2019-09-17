@@ -1,0 +1,37 @@
+<figure id="interaction-2">
+  <figcaption>
+    <a href="#interaction-2">Interaction 2</a>: The interface with buttons of no colors, you decide the color of each button. Left/top: the interface, click on it to load it. Right/bottom: a video explaining how to use it. <a href="https://openvault.jgrizou.com/#/ui/demo_3x3.json">Click here</a> to access the interface full screen.
+  </figcaption>
+  <div class="container">
+    <div class="row align-items-center justify-content-center">
+
+      <script>
+        function load_3x3_vault() {
+          document.getElementById('vault-loader-container-3x3').innerHTML = '<div class="resp-div vault"><iframe class="resp-iframe" src="https://openvault.jgrizou.com/#/ui/demo_3x3.json"></iframe></div>';
+        }
+      </script>
+
+      <div class="col-lg-4 col-md-5 col-sm-5 col-10 nopadding">
+        <div id="vault-loader-container-3x3">
+
+            <div class="vault-loader-panel">
+              <img src="./media/vault_loader_3x3.png" onclick="load_3x3_vault()">
+              <button type="button" class="btn btn-secondary btn-lg" onclick="load_3x3_vault()">Click to load</button>
+            </div>
+
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-7 col-sm-7 col-10 nopadding">
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item"
+            src="https://www.youtube.com/embed/upKejh4ZgUc?start=0&rel=0"
+            allowfullscreen>
+            </iframe>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</figure>

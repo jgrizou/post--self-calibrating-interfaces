@@ -11,7 +11,7 @@
 
 <p>Because the machine knows which colors are applied on the digits<d-footnote>Curious minds might be asking themselves about the planning aspects, which is how the machine decides what colors to apply on the digits. It is indeed a very stimulating problem but let's put it on the side for now. We will discuss planning in section 5.</d-footnote>, when you click on the grey button, it can immediatly discard half of the digits (all the yellow ones). By repeating the process 3 or 4 times, it can identify with certainty your first digit, and move to the second one.</p>
 
-<p>Let's try it out. We will come back to the technical details right after. Below is our interface along with a step-by-step video detailing how to use it. Try entering a 4-digit PIN of your choice.</p>
+<p>Let's try it. We will come back to the technical details right after. Below is our interface along with a step-by-step video detailing how to use it. Try entering a 4-digit PIN of your choice.</p>
 
 <include src="src/figures/vault_1x2.html"></include>
 
@@ -36,10 +36,10 @@
 
 <p>The latter is the most important to our story, it explicits that there is a pre-existing shared understanding between the user and the machine on the meaning conveyed by the pressing of each buttons. It is that assumption that we will relax in the next section.</p>
 
-<p>But for now the machine can follow this simple reasoning: "If the user presses the yellow button, then we can discard all the grey digits". To be precise, we should better say: "If the user presses the yellow button, then they mean that their digit is currently yellow, thus we can discard all the grey digits."</p>
+<p>But for now the machine can follow this simple reasoning: "If the user presses the yellow button, then we can discard all the grey digits". To be precise, we should better say: "If the user presses the left button, then they mean that their digit is currently yellow, thus we can discard all the grey digits."</p>
 
 <p>You can visualize this process directly on the interface below that displays a dedicated side panel showing the inner workings of the machine. As before, a tutorial video is available.</p>
 
 <include src="src/figures/hood_1x2.html"></include>
 
-<p>You now have a clear understanding of how this simple PIN-entering interface works. In the next section, you will discover the self-calibrating version of this interface in which buttons have no pre-defined colors. You will get to decide the colors of each buttons in your mind and never explicitly tell the machine about it. The machine will nonetheless be able to enter your PIN.</p>
+<p>You should now have a clear understanding of how this simple PIN-entering interface works. In the next section, you will discover the self-calibrating version of this interface in which buttons have no pre-defined colors. You will get to decide the colors of each buttons in your mind and never explicitly tell the machine about it. The machine will nonetheless be able to enter your PIN.</p>

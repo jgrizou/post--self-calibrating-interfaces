@@ -1,0 +1,37 @@
+<figure id="interaction-3">
+  <figcaption>
+    <a href="#interaction-3">Interaction 3</a>: The interface with no buttons. The user have to place point on the 2D map and decides which areas are yellow and which ones are grey. Left/top: the interface, click on it to load it. Right/bottom: a video explaining how to use it. <a href="https://openvault.jgrizou.com/#/ui/demo_touch.json">Click here</a> to access the interface full screen.
+  </figcaption>
+  <div class="container">
+    <div class="row align-items-center justify-content-center">
+
+      <script>
+        function load_touch_vault() {
+          document.getElementById('vault-loader-container-touch').innerHTML = '<div class="resp-div vault"><iframe class="resp-iframe" src="https://openvault.jgrizou.com/#/ui/demo_touch.json"></iframe></div>';
+        }
+      </script>
+
+      <div class="col-lg-4 col-md-5 col-sm-5 col-10 nopadding">
+        <div id="vault-loader-container-touch">
+
+            <div class="vault-loader-panel">
+              <img src="./media/vault_loader_touch.png" onclick="load_touch_vault()">
+              <button type="button" class="btn btn-secondary btn-lg" onclick="load_touch_vault()">Click to load</button>
+            </div>
+
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-7 col-sm-7 col-10 nopadding">
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item"
+            src="https://www.youtube.com/embed/b4NjrMB6VLs?start=0&rel=0"
+            allowfullscreen>
+            </iframe>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</figure>

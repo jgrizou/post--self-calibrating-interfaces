@@ -1,32 +1,54 @@
 <a id="section-2"></a>
-<h2>The interface learns from you</h2>
+<h2>Self-calibrating PIN interface</h2>
 
+<p>What if the buttons had no pre-defined colors? In other words, what if the mapping between the position of the buttons (left/right) and their meaning (yellow/grey) was not pre-defined?</p>
 
-<p>We can now express the challenge we are facing in clear terms </p>
+<p>First the user would be a bit confused about what to do and which button to press to enter their PIN. But let us assume the user decides to continue nonetheless and arbitrarily decides a color for each button and use the interface accordingly.</p>
 
+<p>The machine is in trouble now, it does not know what digit the user wants to enter, and it does not know what each button presses mean. The reasoning used previously immediately collapses because we do not know the correspondance between the button position and the button colors. We can no longer follow the logical path: "If the user presses the left button, then they mean that their digit is currently yellow".</p>
 
-<p>a meaning is an interpretation of an action. And this interpreatation can be different between the emitter and the receiver depnding on the context.</p>
+<p>If anything, this reasoning would become: "If the user pressed the left button, then their digit is either yellow or grey, thus I cannot make any decision." End of the story? Of course not. But before explaining how it works, we think you should experience how it feels to use such an interface and be able to arbitrarily choose buttons' colors.</p>
 
-<p>hihglight the assumption of consistency</p>
+<p>As before, in <a href="#interaction-2">Interaction 2</a>, the machine asks you the color of the digit you want to enter. If your digit is grey you press a grey button, respectively for yellow. But this time the colors are not displayed on the button, they are in your mind. You can decide whatever color pattern that you want, providing there is at least one button of each color and thet you stick with the same pattern all along the interaction. Try the interface multiple times, entering different digits and using different color patterns.</p>
 
+<include src="src/figures/vault_3x3.html"></include>
 
-<p>let use this reasoning i the first version of the interface with two buttons, we would say "if the user wants to type a 1 and my model for the digit 1 is that the user is using the left button to mean yeloow etc, then when he pressed the left button, he was being inconsistent with the model I have of them, thus I can discard this hypothesis." It is a bit more convoluted that the one we used, but it is exactly as valid. And seeing the problem with this new pair of eyes turns out to be fundamental to understand the remaining of this article.</p>
+<p>Interesting feeling. We are not used to have this level of choice when using the machines around us. And even when we are able to choose, there is usually an explicit process for expressing that choice. We would first have to assign a color to each button using another interface (say a digital painting brush to color each button yellow or grey) and only then we could start using the interface following our coloring. In other words, there would be a calibration period to teach the machine the buttons to colors mapping we want to use. But not here, the interface is self-calibrating, it understands both the digit and the colors at once. This is what differentiates this work from other adaptive human-computer interfaces. We will come back to this point later, for now let us understand how we solved this problem.</p>
 
+<p>In section 1, we defined the following components: intent, meaning and action. We understood that an action conveys a meaning that can be used to infer an intent. And we have seen that this logical path requires a context that allows to deduce meanings from actions and intents from meanings. In this section, we are breaking one of these links, we do not known the function that translate actions into their meanings. We can express the challenge as follows: Can we identify user intent if the mappipng between the user actions and their meaning is unknown?</p>
 
-<p>And it is very important to think of it that way for the following. We do not simply prune out hypothetic number because the colors did not match. We do it bevause it breaks our underlying assumption about how the user behave if they were trying to convey a certain intent.</p>
+<p>To start answering this question, we have to remember that other assumptions remain firmly embedded in the interaction. We know that the user is trying to type 1 out of 10 possible digits. We know that the principle of interacting is for the user to provide feedback about the color of the particular digit they have in mind. We know that a user press buttons to send this feedback and that one button can only have on color. The question becomes: could we recombine these assumptions to identify the user intent?</p>
 
+<p>We can summarize most of this information as: "The user is assumed to be consistent in its interaction with respect to its intent and the context in which the interaction takes place". Even if we do not know the colors of the buttons, we can still safely assume the user is consistent<d-footnote>Removing the assumtion of consistency would be throwing away all the principle of a user interface and would make any decision impossible, knowing the color of the buttons. Even in cases when we allow for user mistakes, we still assume, on average and in the long run, the user is overall consistent but its action are noisy which we can model explicitly colors of the buttons known or unknown.</d-footnote>.</p>
 
-<p>
-figure of the three areas of the interface
+<p>This notion of consistency will follow us all along this article. It is key to solving the self-calibrating problem because it is the only assumption we can safely rely on. It is an assumption that is implicit in all human-machine interaction scenarios<d-footnote>And indeed in human-to-humam interaction.</d-footnote> but not often made explicit. Here, not only we make it explicit but we make it the measure of interaction sucess. Let us see how we can measure consistency in our PIN enterface interface.</p>
 
-explaining the function that are below
-- f(user, context) -> action
-- f(action)-> meaning
-- f(context,meaning)-> intent
-</p>
+<p>Consistency can be defined as wether the user's actions are aligned to the theoretical model of the user. For example, in section 1, a user is consistent if: "if their digit is grey, they press the grey button". If they press a yellow, they are not being consistent with respect to that digit. For a given digit, this translate in: "knowing that the user wants to type a '1', and that '1' is grey, then if the user presses a grey button, he is consistent, if they press a yellow button, they are inconsistent".</p>
 
+<p>Notice how the reasoning is a bit different than in section 1. We start by saying: "knowing that the users wants to type a '1'". We make an hypothesis about the intent, and then check if the user's actions align with the expected actions from our model of the user. If it matches, we consider '1' as a plausible digit, if not, it is not plausible and we can discard it.</p>
 
-<p>The interface will follow us all along this article and the actions we do to communicate with it will change.</p>
+<p>Following this definition of consistency and we can rewrite the logical of section 1 with two buttons of known colors as follows: "If the user wants to type a 1 and my model of a user is that they are using the left button to mean yellow and the right one to mean grey, then when they pressed the left/yellow button, the user was being inconsistent with the model I have of them, thus the use is not typing a '1'."</p>
 
+<p>It is a fair bit more convoluted that the straitforward logics we used then, but it is exactly as valid and actually exposes this notion of consistency. Seeing the problem with this new pair of eyes turns out to be fundamental to understand the remaining of this article.</p>
 
-<p>Next continuous signals were the combinatority trick would not be possible</p>
+<p>But we are still not tackkling the self-calibration problem. The model of the user is already known in the description above. We know that the left button is yellow and the right button is grey. But in our case, this model is not known. What can we do about it?</p>
+
+<p>############For readers thinking about the combinatoriality issue, the way of reasoning here is what make the problem able to scale to continuous signals. This is also the reason why we could also make hyptohesis on the buttons meaning/colors, butthis is a dead end when we will explore continuous signals. Next continuous signals were the combinatority trick would not be possible############</p>
+
+<p>Well if we do not have a model readily available, we need to build one ourselves and on the fly from the observations we make of the user's actions. And once we have built a model from the history of intercation, we can evaluate the consistency of future user's actions. If a new observation breaks our model, then either our model is wrong (which can only indicate that the method to build the model was wrong because our assumption is that the user is consistent), or the user is being inconsistent with his preivous self.</p>
+
+<p>All good so far but how can we build a model of the user if we do not know what he is trying to do? If we do not know the user intent, we cannot infer the meaning of its actions. Our answer is to not build one model but as many model as possible intent. We can hypothesised what the user migth be trying to do, and by assuming the user is behaving consistenty according to each hypothesised intent, we can build as many models of the user as the set of possible intents. That sounds complex but computers are good at that, it is just data crunching.</p>
+
+<p>So we are bulding as many models of the user as possible intents the user might have. Each model predicting what the user action might do next (clikcing the left or right button). Thus we can evaluate the conssitency of the model prediction with the user's actions with respect to each hypothesis.</p>
+
+<p>It is very important to understand that we do not simply prune out hypothetic digits because the colors did not match. We do it bevause it breaks our underlying assumption about how the user should behave if they were trying to convey a certain intent.</p>
+
+<p>You can visualize this process directly on the <a href="#explanation-2">explanatory interface</a> below that displays a dedicated side panel showing the inner workings of the machine. As before, a tutorial video is available. You can spot inconsistencies on the right panel when the same button is used to mean both yellow and grey, which is imcompatible with our assumption about the user's use of buttons, 1 button -> 1 color.</p>
+
+<include src="src/figures/hood_3x3.html"></include>
+
+<p>The remaining of this article expands on this idea of consistency but consider how to scale it to continuous user's actions. Buttons' presses are discrete and easily idenfiable events which makes it easy to build a model and measure user's consistency, if you use the same button to mean both yellow and grey you are inconsistent. But when the user's actions are drawings, speach, brain signals, movements, the signals received will never be represented twice exactly the same way in the machine. This makes the problem more challenging as boolean logic will not be sufficient anymore. Lucklily asumptions of consistency are paramount in machine learning algorithms such as classifiers, which we will rely on heavily.</p>
+
+<p>In the next section, you will discover a version of our interface with no buttons. Instead you will place points on a 2D map and you will get to decide the 'geography' of this map, which areas are associated to which meanings.</p>
+
+<p class="note">The way of seeing and thinking about the problem we developped in this section will be primordial to understand the next section, do not hesitate to come back to it if needed.</p>
