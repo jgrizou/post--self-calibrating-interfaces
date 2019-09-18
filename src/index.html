@@ -9,7 +9,6 @@
     <script src="https://distill.pub/template.v2.js"></script>
 
     <link rel="stylesheet" type="text/css" href="./components/style.css">
-
   </head>
 
   <body>
@@ -18,7 +17,7 @@
       <script type="application/json">{
         "title": "Title",
         "description": "Description",
-        "password": "t",
+        "password": "",
         "authors": [
           {
             "author": "Jonathan Grizou",
@@ -35,38 +34,17 @@
     </d-title>
 
     <d-article>
-      <include src="src/components/0_introduction.html"></include>
-      <include src="src/components/1_section-1.html"></include>
-      <include src="src/components/2_section-2.html"></include>
-      <include src="src/components/3_section-3.html"></include>
-      <include src="src/components/4_section-4.html"></include>
-      <include src="src/components/5_discussions.html"></include>
+      <include src="src/components/introduction.html"></include>
+      <include src="src/components/section-1.html"></include>
+      <include src="src/components/section-2.html"></include>
+      <include src="src/components/section-3.html"></include>
+      <include src="src/components/section-4.html"></include>
+      <include src="src/components/section-5.html"></include>
+      <include src="src/components/discussions.html"></include>
     </d-article>
 
     <d-appendix>
-
-      <h3>Acknowledgments</h3>
-      <p>
-        We are deeply grateful to...
-      </p>
-
-      <p>
-        Many of our diagrams are based on...
-      </p>
-
-      <h3>Author Contributions</h3>
-      <p>
-        <b>Research:</b> Alex developed ...
-      </p>
-
-      <p>
-        <b>Writing & Diagrams:</b> The text was initially drafted by...
-      </p>
-
-
-      <d-footnote-list></d-footnote-list>
-      <d-citation-list></d-citation-list>
-
+      <include src="src/components/appendix.html"></include>
     </d-appendix>
 
     <d-bibliography src="./references.bib"></d-bibliography>

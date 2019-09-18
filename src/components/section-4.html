@@ -1,0 +1,62 @@
+<a id="section-4"></a>
+<h2>Draw and speak</h2>
+
+<p>If you are familiar with machine learning, the previous section should have been enough to convince you that self-calibration was possible with any tpe of continuous signals, but you might think of practical limitation in terms of number of samples required to train a vaiable classifier. If you are not a machine learning expert, you migth be wondering why and how placing points on the screen can be considered the same as drawing or speaking. This section is meant to answer those questions and show practically how drawing and speaking can fit into our framework.</p>
+
+<p>And it all boils down to representation. Machine-learning classifiers typically work on data represented as a list of real numbers that describe the element we consider. For the point in the 2D map we saw in section 3, the classifier is given as input the (x,y) coordinates of the classifier. For example, a point in the center would be represented as (0.5, 0.5) in the computer, a point on the top left corner would be (0, 1), etc.</p>
+
+<p>And the lenght of this representation does not have to be limited to 2, but can be of any arbitrary lenght. If we consider images, we could have a list of the grey values of all the pixels in the images. For a drawing, the position of the pen at the start and at the end of the drawing, the lenght of the trajectory, etc. A lot of research is done to find the best representation for all possible modalities you can think of.</p>
+
+<p>That is adding one layer of difficulty to our problem which can be solved in two ways. Either we decide of a representation in advances, or we learn the representation from the data. In the following exemple, we are using a mixture of both approach. We build a relatively high-dimensional represenation fo the data which we project into a 2D space.</p>
+
+<p>For non machine-learning readers, ye, it sounds weird, but in this demo, we do represent a drawing and a sound as a point in a 2D space. As unintuitive as it sounds, it is how things work behing the scene (although not as drastic as going down to 2D). It is a process called embedding and it has prooven very efficient.</p>
+
+<p>There is two reasons for doing that: visualisation and user experience (speed to enter a digit). First visualization, representing a 20 dimensional vector on the screen is impossible in a simple way. Representing a drawing or speech in a 2D space allow us to show the all process in our explanaotry interfaces. Second is user experience, if we want to be able to single out one hytpohteiss out of the tens, we need evidence of inconsistencies. If we were to work on a 20 dimensional space, it is very easy to find a way to split the data so that they look consistent. The more the dimensionality the more data you need to be able to tell for sure that one classifier is better that the others.</p>
+
+<p>How we project from a 20D space ot a 2D space is a story of it-self, but guess what sort of assumptions are used in that process? Yes some sort of consistency, the idea that data that are similar in the 20D space should also be represented as similar in the 2D space. With similar meaning close from one another according to some metrics, say the euclidean distance between the points.</p>
+
+<p>Let's start with drawings.</p>
+
+
+<include src="src/figures/vault_draw.html"></include>
+
+
+<include src="src/figures/vault_audio.html"></include>
+
+
+
+
+<include src="src/figures/hood_draw.html"></include>
+
+
+<include src="src/figures/hood_audio.html"></include>
+
+
+<p>
+  Reference: https://github.com/IBM/MAX-Audio-Embedding-Generator
+
+scikit learn
+umap
+
+cite all librairies making this possible
+
+
+it could also work with images, gestures, brain signals, I let the reader use their imagination.
+
+I could take a picture of a cat for yellow and of a dog for grey.
+</p>
+
+
+<p>
+What should be suprinsing is that we were able to learn that "cat" mean yellow and "dog" mean grey. You will not find any dataset online to pre-train a classifier for this language we just invented with the machine. This kind of experiements on language are often called language games which we discuss in section 5.
+</p>
+
+
+<p>
+This next section should be particularly stricking to machine learnign experts, but a bit less for non-machine learning expert as it will feel a lot like using the interface with buttons.
+</p>
+
+
+<p>
+The point is, if you are a machine learning researcher, you will have your prefered way to do thses things, and it is ok. This article is not here to discuss the representation we use and therorise about its performance. We want to show that it works and you can actually play with it and challenge it to find the edge cases when it does not work. And the other many case when it does work. Then if it is of interest or find a good application, our only hope is that you reinvent this for yourselves given all the understanding you developed reading this article. Our mathematical and programtic represenation of the problem might not be the only viaible one, more powerfull mathematical represenation might exist, better represenation of sketches or sounds could be developped, etc.
+</p>
