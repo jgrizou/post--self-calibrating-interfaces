@@ -65,24 +65,24 @@
 
 
 
-@media (min-width: 400px){
+@media (min-width: 380px){
   .img-banner-top, .img-banner-bottom-left, .img-banner-bottom-right {
     width: 19%;
   }
 }
 
-@media (max-width: 400px){
+@media (max-width: 380px){
   .img-banner-top {
     width: 30%;
   }
 
   .img-banner-bottom-left {
-    margin-left: 19%;
+    margin-left: 15%;
     width: 30%;
   }
 
   .img-banner-bottom-right {
-    margin-right: 19%;
+    margin-right: 15%;
     width: 30%;
   }
 

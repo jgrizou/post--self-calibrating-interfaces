@@ -1,17 +1,70 @@
 <a id="section-3"></a>
-<h2>Continuous signals</h2>
+<h2>Can this approach scale to continuous signals?</h2>
+
+<p>We have seen that the common assumption used in all interactive work is that users are being consistent. They use the same actions to mean the same things and use the appropriate meaning to express their intent according to a given context. By directly measuring the user consitency with respect to each possible intents, we were able to solve the self-calibration problem.</p>
+
+<p>When using buttons, it is easy to measure when a user "use the same actions to mean the same things" because pressing of buttons are discrete events. It is easy to know when a user press the same button twice because the button is unique, has a fixed location in space, and triggers the same event.</p>
+
+<p>But that is not always the case. User interfaces come in all sort of shapes and people have been interested to use more natural means of interaction to communicate with the machine around us. Using speach (think of Siri, Alexa, Google Voice), gestures (think Kinect), brain signals (think severy handicap persons that can no more move), muscles contractions (think people with missing limbs in need to control a prosthetic limb). The list is long.</p>
+
+<p>Those signals have the specificity of never being twice exactly the same. The recording of brain signals for example is done on tens of electrode at the same time, measuring signals in the uV range that are noisy and perturbed by the envrionement around them. There no way in a million years that we will record twice the same stream of signals from those electrodes.</p>
+
+<p>Thus we can no more use the following logic: "use the same actions to mean the same things" because all users actions look different now. A all branch of machine learnign is dedicated to that problem, it is called classification. Classification is the process of finding rules that allows to identify group of signals that have the same meaning, called class.</p>
+
+
+<p>Explain the idea of a map of colors with a drawing.</p>
+
+<include src="src/figures/vault_touch.html"></include>
+
 
 <p>
 
 Interestingly, consistency is an assumtion that powers most, if not all, machine learning algorithms, in a similar way as the Occam's razor principle. This assumtions of consistency is directly encoded in the cost functions that are optimized in both supervised and unsupersived learning problems. We will come back to this is more details, but
 
-We build a model from what if see and then test that model on what we see next. Which one is better able to predict what we do next, it is assumed to be the good one Because we assume the user is consistent shared assumtion with all machine learning paradigms.
+We build a model from what if see and then test that model on what we see next. Which one is better able to predict what we do next, it is assumed to be the good one. Because we assume the user is consistent shared assumtion with all machine learning paradigms.
 
 Talk about calibration
 </p>
 
 
-<include src="src/figures/vault_touch.html"></include>
+<p>It turns out that these algorithms all run on the assumption that the datas have some sort of consistency. That signals that have the same class are more similar to each others than from signals of an other class. That they form groups in a way. And that assumption is indeed what we naturally do when trying to group things.</p>
 
+
+<p>IMAGE OF CLASSIFICATION</p>
+
+
+<p>Concretely, if a user uses speach to interact with our interface and uses the sounds "yellow" to mean yellow and the sound "grey" to mean grey. If the when the user repeat twice the sounds "yellow" it does create the exact same waveform as the pitch, duration, intonation will inevatibly vary. But we would assume two things that the user is consistent in using the word "yellow" and "grey" when they want to mean yellow and grey, and that the sounds "yellow" are more similar to each others than to the sounds "grey". It turns out classifier can help us to identify that similarity.</p>
+
+<p>To train a classifier you need two things. Data and labels. Data are the raw signals and are described as a vector of values, and labels are a unique identifiers for each class (yellow or grey). The problem we are facing in the self-calibration problem is that we do not have any training set, any data,labels pair before the interaction starts. Thus we cannot create a claasifier, thus we cannot know what the user means, thus we cannot infer their intent. A bit like in the button case when there was no colors associated to the buttons. And like in the button case, the classical solution is to resort to a calibration period were the user is following instruction accroding to a known protocol to build a dataset with known labels (a bit like the painting brush interface we refered to in section 2). The dataset is used to train a classifier, which is used in the interface as the function that translate user's actions to meanings.</p>
+
+<p>We will resort in the same trick as in section two to remove the need for this calibration procedure. To estimate the consistency of a user, we need to have a model of the user, this model will be a classifier here, we cannot build a model because we do not have a training dataset. But we have a set of possible intents the user might want to achieve, thus we can build as many dataset as there is possible intent (10 in our PIN entering device). Thus we can build 10 differetns classifiers from the data.</p>
+
+
+
+<p>But how will we measure consistency then? If I build a model from data, surely the model will just represent my data exactly. But the good thing about classifier is that they can generalise, they can predict the class of a signal thay have never seen before. This ability to makew prediction is areas of the feature space and the assumption that powers it, are what enables us to sort out the consistent dataset from the non consistent one</p>
+
+<p>In short, because of the constraints that apply to the interaction (that is our context, of entrign a PIN by feedback on color), we can build 10 alternative interpreation fo the data, which translate into 10 alternative trainign set, 10 alternatvie classifier. The question is then, which one of those classifier make more sense? Which one is able to make the better prediction? Which one represents a more consistent user? By consistency we mean which hypothesis is representing a user that use similar signals signals ot mean the same things?</p>
+
+<p>An classifer are built to do just that and the all discussion about underfitting and overfitting really only talk about the right level of consistency in the data we should expect. If we thing the data should be easily differentiable, we more strict cost on the regularization terms should not be a problem, aif we think the data are very close, the frontiers is highly non linear, and could maybe overlap, then a bit less regularization could be wise. Meta method to decide on this have develop via cross-validation, which allow to automatically train the best classifier for a given set of data.</p>
+
+<p>To test the quality of a classifier we can compute the likelihood of the data under the model. The highest the likelihood, the better the data are aligned with the trained model, the less effort he algorithm need to fit the classifier, hence the more consistent they are. The lowest the likelihood, the more effort it took to fit the classifier, the less the data are straiforward to fit, the less the data are consistent. And to be more precise we can compute the likelihood using a cross validatino procedure too.Thus this time the comparison between each huypothesis cannot be done with aboslute certainy as boolean logic does not prevail, rather each hytpothesis is assigned a probbaility and some statistical decision has to be made to decide when an bhypothesis is considered more consistent that all other hypothesis with very high probability. But implementation details do not matter for now, there are very interesting for expert in the domain and references will be provided in section 5. </p>
+
+<p>That is it really, we train 10 classifiers on the same data but with different labels. We test the accuracy of each classifier and decide that the best classifier is the one associated to the true intent of the user because bu seing the world through that intent, our model of the user is consistent, but not for the other alternative hypothesis. Consistency once again is key.</p>
+
+<p>You can visualize this all proces on the interactive explanation below. Try to challenge the machine with color maps that are hard to identify, especially by not using well separated cluster fo points.</p>
 
 <include src="src/figures/hood_touch.html"></include>
+
+<p>LINK TO ALL DEMO VIDEOS showing the crazy thing we can do</p>
+
+
+<p>A important thing to note is how we realocated all the labels once we have identified the first digit. When we are sure about the digit, we are sure of the labels, thus we can propagate them to all hypothesis, they are a common truth. But all subsequent user's actions will have again different interpreatation according to each hypothesis, driving away the classifiers again, but making it faster for the machine to identify the solution as one grey point in the middle of a yellow pool of dot, will be a strog sign of insocnsitencies.</p>
+
+
+<p>Before moving to the next section, we should talk about unsupervised learning. Like we discussed in section 2 about the possibility to geenrate coupled hypothesis on the intent+action to meaning, the same idea could be brought back here by first using a clusterign algrotihm to find clusters and then consider all combinations of class for these clusters. The combinatoriality could rise really quickly indeed. But more importantly it would be a very limited approach in the real word as clustering require a lot more data that our apporahc requires, and it simply does not work well when the data are very close or overlapping. Clusteting is an extreme case of using consistency as an assumption as it requires relaitvely well separated data. The approach presented here is more powerful because we actually use labels, and labe can inform us ont he strcuture of the data in way unsupervide clustering cannot. We will come back to this point in section 5.</p>
+
+<p>Learning both a classifier and the intent.</p>
+
+<p>Now that we could solve the self-calibration problem with continuous user signals, the pandora box is fully openned. A big game in machien learning is to represetnt he data int he form of vectors that can be used by these algrothms. So a lot of work has been done to represent speech, drawings, gestures, brain signals, and about all you can think about.</p>
+
+<p>In the next section, we demonstrate the use of drawing and speech to enter a pin in our interface, entering firmly in the space of language learning and providing concrete examples of what self-calibrating devices can do.</p>

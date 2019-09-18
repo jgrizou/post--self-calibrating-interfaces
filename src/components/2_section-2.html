@@ -47,8 +47,8 @@
 
 <include src="src/figures/hood_3x3.html"></include>
 
+<p>A cool thing to note too is how we realocated all the colors once we have identified the first digit. When we are sure aboutthe digit, then we are sure about the labels, thus we can freeze that part of our model by coloring the corresping button with their associated colors.</p>
+
 <p>The remaining of this article expands on this idea of consistency but consider how to scale it to continuous user's actions. Buttons' presses are discrete and easily idenfiable events which makes it easy to build a model and measure user's consistency, if you use the same button to mean both yellow and grey you are inconsistent. But when the user's actions are drawings, speach, brain signals, movements, the signals received will never be represented twice exactly the same way in the machine. This makes the problem more challenging as boolean logic will not be sufficient anymore. Lucklily asumptions of consistency are paramount in machine learning algorithms such as classifiers, which we will rely on heavily.</p>
 
 <p>In the next section, you will discover a version of our interface with no buttons. Instead you will place points on a 2D map and you will get to decide the 'geography' of this map, which areas are associated to which meanings.</p>
-
-<p class="note">The way of seeing and thinking about the problem we developped in this section will be primordial to understand the next section, do not hesitate to come back to it if needed.</p>
