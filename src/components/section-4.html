@@ -17,46 +17,49 @@
 
 <p>Let's start with drawings.</p>
 
+<p>The interface is the same as before but the pad now allows you to draw on it. We restraint sketeches to one single line contained in the pad. To start a drawing simply click on the pad and move your mouse/finger to form the sketch you want. The sketch will stop when you release your click.</p>
+
+<p>Choose one shape for yellow and one shape for grey. For example, circles for yellow and triangle for grey, or a vertical line for yellow and a zigzag for grey. The underlying algortihm represents the shapes in ways that should make simple shapes easily differentiable. However, if you try to draw a dog with 3 legs for yellow and 4 legs for grey, it might not work as well and certainly not as fast. Our point is not to excel in shape recognition here but to demonstrate the scaling of our method to more familiar communicative modalities from humans.</p>
+
+<p>The interface has two addtionals information panel that can pop up from the bottom. Once the experience started, two buttons will show up, on the right will ba a button called show history, it will show the history of sketches you drew colored either yellow or grey depending on what the machine think they means. No color will be applied if the machine is not yet sure of the meaning of your drawings. The left button is for showing the map, which is a 2D representation of the drawing. Each drawing will be showned on a plane that should conserve a similarity metrcis between the drawing. This is to help make the parralel with the previous level as a drawing can be represented as a point in a 2D space. Here again, colors will be applied when the machine is certain about the menaing of the sketeches.</p>
 
 <include src="src/figures/vault_draw.html"></include>
 
-
-<include src="src/figures/vault_audio.html"></include>
-
-
-
+<p>If you want to see the underlying process, the interface is available below with the side panel showing the hypothesis process.</p>
 
 <include src="src/figures/hood_draw.html"></include>
 
+<p>If it works for sketches, we can make it work for all other kind of modalities. A stinking one is spoken commands. Surely one could make this interface using a speech to text translator and use a symbolic represenation fo words, or we could pre-defined a set of words for yellow or grey. But the steenght of our approach is that any words or sounds could be used here, not just the one specified in advanced by the developers and expected from the language, or that can be translated into text. We can invent our own language from scratch with the machine.</p>
+
+
+<p>Let us list here a few exemples of what can be done: Speak english and use the word "yellow" to mean yellow, and "grey" to mean grey. Speak french and use the word "jaune" to mean yellow and "gris" to meand grey. Speak frenglish and sue the word yellow to mean yellow and gris to mean grey. Use the word "sun" to mean yellow and "rhinoceros" to mean grey. Use the word "coffee" to mean yellow, and "bike" to mean grey. Use one hand clapping to mean yellow and two hand clapping to emena grey. Use one sifflement to mean yellow and the word lolipop to mean grey. And of course be sniky and use the word grey to mean yellow and the word yellow to mean grey. Basically anything you want, you invent a simple two sounds language and the machine learns it.</p>
+
+<p>The interface allows you to record a 2 seconds sounds of your choice each time you click on the button. As soon as you clik on the button, the recording starts, the remaining time is displayed as the button changes colors from red to grey. Once the red component disappear the sounds stops recording and is send to the machine for analysis. When the machine anylsed it, it changes the colors of the digits and truns the microhone button green again. as for the drawing demo, two information panel are available allowing you to see the history of sounds and replay it, and see the represenatino of each sounds on a 2D space, here again you can replay the sounds.</p>
+
+<p>This demo might not work perfectly on some devices, we recommend going direclty on the full page demo and using either chrome or firefox browsers.</p>
+
+<include src="src/figures/vault_audio.html"></include>
+
+<p>If you want to see the underlying process, the interface is available below with the side panel showing the hypothesis process.</p>
 
 <include src="src/figures/hood_audio.html"></include>
 
-
 <p>
-  Reference: https://github.com/IBM/MAX-Audio-Embedding-Generator
-
-scikit learn
-umap
-
-cite all librairies making this possible
+What should be suprinsing is that we were able to learn that "cat" mean yellow and "dog" mean grey. You will not find any dataset online to pre-train a classifier for this language we just invented it with the machine. This kind of experiements on language are often called language games which we discuss in section 5.
 
 
 it could also work with images, gestures, brain signals, I let the reader use their imagination.
 
 I could take a picture of a cat for yellow and of a dog for grey.
-</p>
 
+</p>
 
 <p>
-What should be suprinsing is that we were able to learn that "cat" mean yellow and "dog" mean grey. You will not find any dataset online to pre-train a classifier for this language we just invented with the machine. This kind of experiements on language are often called language games which we discuss in section 5.
+The point is, if you are a machine learning researcher, you will have your prefered way to do thses things, and it is ok. This article is not here to discuss the representation we use and therorise about its performance. We want to show that it works and you can actually play with it and challenge it to find the edge cases when it does not work. And the other many case when it does work. Then if it is of interest or find a good application, our only hope is that you reinvent this for yourselves given all the understanding you developed reading this article. Our mathematical and programtic represenation of the problem might not be the only viaible one, more powerfull mathematical represenation might exist, better represenation of sketches or sounds could be developped, etc.
 </p>
-
 
 <p>
 This next section should be particularly stricking to machine learnign experts, but a bit less for non-machine learning expert as it will feel a lot like using the interface with buttons.
 </p>
 
-
-<p>
-The point is, if you are a machine learning researcher, you will have your prefered way to do thses things, and it is ok. This article is not here to discuss the representation we use and therorise about its performance. We want to show that it works and you can actually play with it and challenge it to find the edge cases when it does not work. And the other many case when it does work. Then if it is of interest or find a good application, our only hope is that you reinvent this for yourselves given all the understanding you developed reading this article. Our mathematical and programtic represenation of the problem might not be the only viaible one, more powerfull mathematical represenation might exist, better represenation of sketches or sounds could be developped, etc.
-</p>
+<p>You have discovered a machien-learning paradigms that can exploit task-constraints to learn both what a user wants to do and how he is trying to do it. In the next section we wrap up what we learned, present related work and remaining challenges to scale this to more complex problems.</p>
