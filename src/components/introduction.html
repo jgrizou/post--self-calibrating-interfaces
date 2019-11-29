@@ -1,4 +1,22 @@
-<p>An interface sits between a user and the machine they want to control. The interface is here to convey the user's intent to the machine, which can then act accordingly.</p>
+<p>Interfaces are everywhere. They enable us to convey our intent to machines. Typically, buttons are to be pressed and the letters printed on them indicate what they do. But is that necessary? In this article, we demonstrate how a machine can respond appropriately to user inputs without knowing exactly what they mean.</p>
+
+<p>To explore this question, we designed a PIN-entering interface that will follow us throughout our journey. You will use it to type a 4-digit PIN of your choice. But instead of pressing directly on each digits, you will tell the machine what colors are assigned to your digits. The  machine will be able to identify your PIN via a process of elimination. Which will quickly look like magic when the commands you use for each color will be unknown to the machine, but decided by you on the fly.</p>
+
+<p>Without further ado let's discover what the interface looks like. It can be broken down into three parts. The top part is where your 4-digit PIN will be dispayed. The middle part shows all digits from 0 to 9 colored in either yellow or grey. The bottom part is for user interaction, for now it contains two buttons, one yellow and one grey. Think of the machine asking you: "What color is your digit?". Looking at the digit you want to enter, you would answer: "My digit is yellow/grey" by clicking on the corresponding button.</p>
+
+<include src="src/figures/interface_breakdown.html"></include>
+
+<p>Say your PIN is a very secure 1234. You start by typing the first digit of our PIN<d-footnote>As indicated by the dark frame around the left most digit in the top of <a href="#figure-1">Figure 1</a></d-footnote>, which is a 1. Because the digit 1 is currently colored in yellow, you should click on the yellow button. The machine can immediately discard all the grey digits, and infer that the first digit of your PIN is either 1, 3, 4, 5, or 6. The digit's colors will then change, and by repeating the process a few times the machine will identify your first digit with certainty before proceeding to the second one.</p>
+
+<p>It is your turn now. Below is our interactive interface along with a step-by-step video detailing how to use it. Try entering 1234 or any PIN of your choice.</p>
+
+<include src="src/figures/vault_1x2.html"></include>
+
+---
+
+
+
+<p>An interface sits between a user and the machine they want to control. Its purpose is to convey the user's intent to the machine, which can then act accordingly.</p>
 
 <p>Think about the remote control of your TV. It is just a plastic box with buttons. The buttons are to be pressed and the letters printed on them indicate what they do. The physical action of pressing the button printed with '1' is transcribed into an electronic signal that is understood by the TV to display channel 1.</p>
 
