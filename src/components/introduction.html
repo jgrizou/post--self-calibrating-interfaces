@@ -1,38 +1,45 @@
-<p>Interfaces are everywhere. They enable us to convey our intent to machines. Typically, buttons are to be pressed and the letters printed on them indicate what they do. But is that necessary? In this article, we demonstrate how a machine can respond appropriately to user inputs without knowing exactly what they mean.</p>
+<p>Interfaces are everywhere. They enable us to convey our intent to machines. Typically, buttons are to be pressed and the letters printed on them indicate what they do. But are the letters always necessary? In this article, we demonstrate how a machine can respond appropriately to users' inputs without knowing exactly what they mean.</p>
 
-<p>To explore this question, we designed a PIN-entering interface that will follow us throughout our journey. You will use it to type a 4-digit PIN of your choice. But instead of pressing directly on each digits, you will tell the machine what colors are assigned to your digits. The  machine will be able to identify your PIN via a process of elimination. Which will quickly look like magic when the commands you use for each color will be unknown to the machine, but decided by you on the fly.</p>
+<p>To explore this question, we designed a PIN-entering interface that will follow us throughout our journey. You will use it to type a 4-digit PIN of your choice. But instead of pressing directly on each digits, you will press buttons that inform the machine of the colors associated to your digits. The  machine will be able to identify your PIN via a process of elimination. Which will quickly look like magic when colors won't be pre-assigned to each button, but instead assigned by you on the fly and undisclosed to the machine.</p>
 
-<p>Without further ado let's discover what the interface looks like. It can be broken down into three parts. The top part is where your 4-digit PIN will be dispayed. The middle part shows all digits from 0 to 9 colored in either yellow or grey. The bottom part is for user interaction, for now it contains two buttons, one yellow and one grey. Think of the machine asking you: "What color is your digit?". Looking at the digit you want to enter, you would answer: "My digit is yellow/grey" by clicking on the corresponding button.</p>
+<p>Before providing an <a href="#overview">overview</a> of this article, we think you should first be introduced to this interface.</p>
+
+<p>The interface can be broken down into three parts. The top part is where your 4-digit PIN will be dispayed. The middle part shows all digits from 0 to 9 colored in either yellow or grey. The bottom part is for user interaction, for now it contains two buttons, one yellow and one grey. Think of the machine asking you: "What color is your digit?". Looking at the digit you want to enter, you answer: "My digit is yellow/grey" by clicking on the corresponding button.</p>
 
 <include src="src/figures/interface_breakdown.html"></include>
 
-<p>Say your PIN is a very secure 1234. You start by typing the first digit of our PIN<d-footnote>As indicated by the dark frame around the left most digit in the top of <a href="#figure-1">Figure 1</a></d-footnote>, which is a 1. Because the digit 1 is currently colored in yellow, you should click on the yellow button. The machine can immediately discard all the grey digits, and infer that the first digit of your PIN is either 1, 3, 4, 5, or 6. The digit's colors will then change, and by repeating the process a few times the machine will identify your first digit with certainty before proceeding to the second one.</p>
+<p>For example, if your PIN is a very secure 1234. You would start by typing the first digit of our PIN<d-footnote>As indicated by the dark frame around the left most digit in the top of <a href="#figure-1">Figure 1</a></d-footnote>, that is a 1. Because the digit 1 is currently colored in yellow, you click on the yellow button. The machine can immediately discard all the grey digits, and infer that the first digit of your PIN is either 1, 3, 4, 5, or 6. The digit's colors will then change, and by repeating the process a few times the machine will identify your first digit with certainty before carrying on with the second one.</p>
 
-<p>It is your turn now. Below is our interactive interface along with a step-by-step video detailing how to use it. Try entering 1234 or any PIN of your choice.</p>
+<p>Entering a code yourself is the best way to understand. Try entering 1234 or any PIN of your choice below in <a href="#interaction-1">Interaction 1</a>.</p>
 
 <include src="src/figures/vault_1x2.html"></include>
 
----
+
+<p>Congratulation! You now understand the principle of interaction with this interface. We describe next what you should expect to learn in this article.</p>
+
+<a id="overview"></a>
+<h3>Overview</h3>
+
+<!-- <p>An interface sits between a user and the machine they want to control. Its purpose is to convey the user's intent to the machine, which can then act accordingly. Our interface purpose is to transmit your PIN to the machine. Think of an ATM machine, entering your PIN allows the machine to validate you are the owner of the credit card.</p> -->
+
+<!-- <p>Think about the remote control of your TV. It is just a plastic box with buttons. The buttons are to be pressed and the letters printed on them indicate what they do. The physical action of pressing the button printed with '1' is transcribed into an electronic signal that is understood by the TV to display channel 1.</p> -->
+
+<!-- <p> This ability for a machine to translate user's actions into their meanings seems paramount for an interface to work. How could a machine respond to some commands if it does not know what those commands mean?</p> -->
 
 
+<p>In <a href="#interaction-1">Interaction 1</a>, we conveyed our intent to the machine via two big brightly colored buttons. The colors indicate what the buttons mean to both the machine and the user. The ability to translate our button presses into their meanings seems paramount for any interface to work.</p>
 
-<p>An interface sits between a user and the machine they want to control. Its purpose is to convey the user's intent to the machine, which can then act accordingly.</p>
-
-<p>Think about the remote control of your TV. It is just a plastic box with buttons. The buttons are to be pressed and the letters printed on them indicate what they do. The physical action of pressing the button printed with '1' is transcribed into an electronic signal that is understood by the TV to display channel 1.</p>
-
-<p>This ability for a machine to translate user's actions into their meanings seems paramount for an interface to work. How could a machine respond to some commands if it does not know what those commands mean?</p>
-
-<p>We showcase such a machine below. The plan is as follow:</p>
+<p>In this article, we question this assumptions and ask: could a machine respond to user commands without knowing what those commands mean? Concretely, could our interface identify your PIN without knowing the colors of the buttons in advance? We showcase and decipher such a machine below using different versions of our interface. The plan is as follow:</p>
 
 <ol>
 
-  <li>In <a href="#section-1">section 1</a>, we present our interface, a PIN-entering device, and learn how to type a PIN by pressing buttons of known meanings. We analyse this interface and highlight the various components that are at play.</li>
+  <li>In <a href="#section-1">section 1</a>, we analyse the interface as presented in <a href="#interaction-1">Interaction 1</a> and identify the various components at play.</li>
 
-  <li>In <a href="#section-2">section 2</a>, we present the self-calibrating version of our interface. The buttons will loose their markings and you will get to decide what each button means. The machine will nonetheless figure out your PIN, as well as the meaning of each button. We will decipher how it works and refine our mental model to include what we learned.</li>
+  <li>In <a href="#section-2">section 2</a>, we present the self-calibrating version of our interface. The buttons loose their pre-assigned colors. You will get to decide of the colors in your mind and use the interface as such. The machine will nonetheless figure out your PIN, as well as the color of each button. We will decipher how it works and refine our mental model to include what we learned.</li>
 
-  <li>In <a href="#section-3">section 3</a>, we learn how to scale our approach to continuous user's actions. It is a challenging task because it requires to train a classifier without access to known labels. To showcase this, our interface will no longer have buttons. You will place points on a 2D map and decide which areas are associated to which meanings.</li>
+  <li>In <a href="#section-3">section 3</a>, we scale our approach to continuous user's actions. A challenging task because it requires to train a classifier without access to known labels. To showcase this, our interface will no longer have buttons. You will place points on a 2D map and decide which areas are associated to which colors.</li>
 
-  <li>In <a href="#section-4">section 4</a>, we demonstrate the use of more natural interaction modalities. You will enter your PIN by drawing small sketches and using spoken commands. Once again, you will get to decide what sketches or sounds you want to use, and the machine will identify both your PIN and a classifier mapping your actions to their meanings.</li>
+  <li>In <a href="#section-4">section 4</a>, we demonstrate the use of higher-level interaction modalities. You will enter your PIN by drawing small sketches and using spoken commands. Once again, you will get to decide what sketches or sounds you want to use, and the machine will identify both your PIN and a classifier mapping your actions to their meanings.</li>
 
   <li>In <a href="#section-5">section 5</a>, we present previous academic work on the subject, position this work into the human-computer interface and machine-learning landscape, highlight some remaining challenges, and ask ourselves how this work can be useful with concrete examples from brain-computer interfaces to the study of language formation.</li>
 
