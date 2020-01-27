@@ -1,6 +1,11 @@
 <a id="section-3"></a>
 <h2>Can this approach scale to continuous signals?</h2>
 
+
+<p>Up to now, we considered discrete button presses and our logic was based on identifying if the user was using the <b>same</b> button (action) for different colors (meaning). This notion of <b>same</b> was easily measurable with button events. But when the user's actions are more complex, such as drawings, sounds, gestures, brain signals, or nerve impulses, the same action will never be represented twice in exactly the same way. It becomes impossible to define a notion of same preemptively, and our boolean reasonning can no more be applied. Lucklily, similarity measures are paramount in machine learning and are directly encoded in classifiers' cost functions. We will exploit this to our advantage.</p>
+
+
+
 <p>We have seen that the common assumption used in all interactive work is that users are being consistent. They use the same actions to mean the same things and use the appropriate meaning to express their intent according to a given context. By directly measuring the user consitency with respect to each possible intents, we were able to solve the self-calibration problem.</p>
 
 <p>When using buttons, it is easy to measure when a user "use the same actions to mean the same things" because pressing of buttons are discrete events. It is easy to know when a user press the same button twice because the button is unique, has a fixed location in space, and triggers the same event.</p>
@@ -68,3 +73,61 @@ Talk about calibration
 <p>Now that we could solve the self-calibration problem with continuous user signals, the pandora box is fully openned. A big game in machien learning is to represetnt he data int he form of vectors that can be used by these algrothms. So a lot of work has been done to represent speech, drawings, gestures, brain signals, and about all you can think about.</p>
 
 <p>In the next section, we demonstrate the use of drawing and speech to enter a pin in our interface, entering firmly in the space of language learning and providing concrete examples of what self-calibrating devices can do.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>Before moving to the next section, we need to condense all this into one concept: consistency. Consistency is about following a convention, it is about being consistent with what is expected in a given context. This notion of consistency is key to solving the self-calibrating problem because it is the only assumption we can safely rely on. It is an assumption that is implicit in all human-machine interaction scenarios<d-footnote>Even when allowing and accounting for user mistakes, one still assumes - on average and in the long run - that the user is consistent. We usually explicitly model user deviation from expectation (also called mistakes or inconsistencies) as noise in their action selection process. Removing the assumption of consistency would be throwing away all the principles of a user interface and would make any decision impossible.</d-footnote> - knowing the colors of the buttons or not. In this work, we not only make this assumption explicit but we make it a direct measure of the success of the interaction. So what is consistency really? consistency about what? how can we measure consistency in our PIN entering interface?</p>
+
+
+<p>Another way to summarize the assumptions from above is that: "Users are assumed to be consistent with themselves and in their interaction with the machine, both according to their intent and the context in which the interaction takes place".</p>
+
+
+
+<p>Consistency can be defined from two perspectives: (1) consistent with respect to an intent (clicking on a button of the same color as the intended digit) and (2) consistent with oneself (the same button is always used to mean the same color).</p>
+
+
+<p>So what we are doing is simply changing where we measure consistency and what we consider to be known. We assume we know what the user is trying to do so we can measure the consistency in its use of the buttons, and necause we have a limited set of possible intents, we can do that for all possible intents.</p>
+
+<p>That was quite mindblowing to me when I realized we could solve this problem in such a simple and generalizable way.</p>
+
+
+<p>In section 1, we relied only on the first version of consistency and assumed the second version to be holding true at all times. We had a model of our user and evaluated its actions based on that model to see if they acted consistently with the protocol according to each digit.</p>
+
+<p>In this section, we will do the reverse. We will assume the first is true and mesure the second type of consistency. The first one, if evaluate for each digit, can tell us about the color of the button depending on hypothesised intent of the user. Having access to button colors, can help us build a model of the user. And we can then measure the consistency of the user from that model. A model in which the same button is used to mean both yellow and grey is a proof of inconsistency and can be discarded.</p>
+
+<p>Consistency can be defined as wether the user's actions are aligned with the theoretical model of the user. For example, in section 1, a user is consistent if: "if their digit is grey, they press the grey button". If they press a yellow, they are not being consistent with respect to that digit. For a given digit, this translate in: "knowing that the user wants to type a '1', and that '1' is grey, then if a user presses a grey button, they are consistent, if they press a yellow button, they are inconsistent".</p>
+
+<p>Notice how the reasoning is a bit different than in section 1. We start by saying: "knowing that the users wants to type a '1'". We make an hypothesis about the intent, and then check if the user's actions align with the expected actions from our model of the user. If it matches, we consider '1' as a plausible digit, if not, it is not plausible and we can discard it.</p>
+
+<p>Following this definition of consistency and we can rewrite the logical of section 1 with two buttons of known colors as follows: "If the user wants to type a '1' and my model of a user is that they are using the left button to mean yellow and the right button to mean grey, then when they pressed the left button, they meant yellow which was inconsistent with the model I have of the user because the digit '1' was grey and I expected them to press the right button to mean grey, thus the user is not typing a '1'."</p>
+
+<p>It is significantly more convoluted that the straitforward logics we used then, but it is exactly as valid and has the advantage of exposing the notion of consistency. Seeing the problem with this new pair of eyes is fundamental to understand the remaining of this article.</p>
+
+<p>Having introduced consistency, we have not yet tackled the self-calibration problem. In the description above, the model of the user is already known. We expect the user to use the left button to mean yellow and the right button to mean grey. But when buttons have no colors, this part of our user model is not known.</p>
+
+<p>If we do not have a user model, we have two choices: (1) we can make hypotheses about all possible user models and test them against observed user's actions, or (2) we can build models on the fly from the observations we make of the user's actions.</p>
+
+<p>Option (1) would quickly run into combinatioral issues as, in additional to considering all possible user's intents, we should also consider all possible button-to-color mappings. It would remain manageable with the 9 buttons used in <a href="#interaction-2">Interaction 2</a> with <d-math>2^9=512</d-math> possible user models. But it would become impossible to handle in section 3 when we move to continuous actions. Actions being never twice the same, the combinatoriality of user models will grow with the number of interaction (<d-math>N</d-math>) in <d-math>2^N</d-math>, and more importantly consistency will be impossible to assess due to a lack of constraints. We will come back to this notion of constraints.</p>
+
+<p>Option (2) sounds more interesting. Because we can observe the user's actions, we should be able to build a model of the user while the interaction unfolds. One problem remain: how can we build a model of a user if we do not know their intent, that is if we do not know what their actions mean? Constraints from the context tell us that the user's intent is to type 1 out of 10 possible digits. Thus, by assuming the user behaves consistently according to its intent, we can hypothesise and build as many models of the user as the set of possible intents. Compared to option (1), we do not have to build all possible models, but just as many as hypothesised intents, in our case only 10.</p>
+
+<p>To sum up, we are bulding as many models of the user as possible intents. Each model predicting what the user might do next according to intent the  model was built from. From this model, we can evaluate the consistency of future user's actions. If a new observation deviate from the expectation from a model, then either the user is being inconsistent with his preivous self which can only indicate that the intent hypothesis used to build the model was wrong because our assumption is that the user is consistent.</p>
+
+<p>Pluging this back to our logical statement: "If the user wants to type a '1', we can revisit the past history of its actions and build a model of the user as if they wanted to type a '1'. Then, when the user presses the next button, we can check wether their action is consistent with the model we just built with respect to the current color of the digit '1'. If yes, the user could be trying to type a 1, if not the user is certainly not trying to type a 1." </p>
+
+<p>In very concrete terms, when, according to a given hypothesis, the same button seems to be used to mean both yellow and grey, the hypothesis can be discarded because it is imcompatible with our assumption of user consistency.</p>
+
+<p>Lucklily, assumptions of consistency are paramount in machine learning algorithms and are directly expressed in classifiers' cost functions. We will exploit this to our advantage.</p>

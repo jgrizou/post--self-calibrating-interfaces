@@ -1,12 +1,12 @@
 <a id="section-1"></a>
 <h2>Analysis of the PIN-entering interface</h2>
 
-<p>Successfully entering a PIN using <a href="#interaction-1">Interaction 1</a>, indicates that you understand the principle of interaction between you and our interface. If you have a background in computer science, you probably even know how to implement this at home. But, before moving on with the self-calibrated version of this interface, it is important that we breakdown and name the various elements at play.</p>
+<p>Successfully entering a PIN using <a href="#interaction-1">Interaction 1</a> indicates that you understand the principle of interaction between you and our interface. If you have a background in computer science, you probably even know how to implement this at home. But, before moving on with the self-calibrated version of this interface, it is important that we breakdown and name the various elements at play.</p>
 
 <p>First, we should differentiate between three components driving the user behavior:</p>
 
 <ul>
-  <li>The user's <b>intent</b> is what the user wants the machine to do. Here entering a specific PIN, digit per digit.</li>
+  <li>The user's <b>intent</b> is what the user wants the machine to do. Here entering a specific PIN, one digit at a time.</li>
   <li>The user's <b>meaning</b> is what the user wants to say to the machine. Here it is either: "My digit is yellow" or "My digit is grey".</li>
   <li>The user's <b>action</b> is what the user does in order to express their meaning. In <a href="#interaction-1">Interaction 1</a>, user's actions are to press either the left or the right button.</li>
 </ul>
@@ -14,7 +14,7 @@
 <p>In short, an action conveys a meaning that is used to infer an intent. But infering an intent from a meaning requires a bit of context. With our interface, the context is a user wanting to type a PIN via our interface. In other words, we assume that:</p>
 
 <ul>
-  <li>The user aims to type a PIN one digit at a time. Thus their intent is to type one of the ten possible digits.</li>
+  <li>The user aims to type a PIN one digit at a time. Thus their current intent is to type one of the ten possible digits.</li>
   <li>The user follows a specific convention of interaction. They indicate the color of the digit they want to type. Thus, the possible meanings are yellow or grey.</li>
   <li>The user can perform one of two actions, pressing either the left or the right button. This is constrained by the design of our interface.</li>
   <li>The <b>mapping between the user's actions and their meanings</b> is known. Pressing the left button conveys the meaning yellow and the right button conveys the meaning grey.</li>

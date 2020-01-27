@@ -17,74 +17,22 @@
 
 <p>In section 1, we defined the following components: intent, meaning and action. We understood that an action conveys a meaning that can be used to infer an intent. And we have seen that this logical path requires a context that allows to deduce meanings from actions and intents from meanings. In this section, we are breaking one of these links, we do not known the mapping between the user's actions and their meanings. Using this terminology, we can state the challenge as follows: Can we identify user intent if the mapping between the user actions and their meanings is unknown?</p>
 
-<p>But unknowns are scary, we can reassure ourselves by listing the remaining known elements in our context. We know that users want to type one of ten possible digits, they indicate the color of the digit they have in mind, and they press buttons to send their feedback. All these assumptions remain, and one can be added which was implicit and hidding in plain sight.</p>
+<p>But unknowns are scary. Let's reassure ourselves by listing the remaining known elements in our context. We know that users want to type one of ten possible digits, that they indicate the color of the digit they have in mind, and that they press buttons to send their feedback. All these assumptions remain, but one can be added which was implicit all along and hidding in plain sight.</p>
 
-<p>We assumed all along that a button has one and only meaning - yellow or grey. This assumption could barelly be formulated before because colors were visibly assigned on the buttons, it was too obvious to be highlighted. The assumption that one button equals one meaning is so ingrained in our interaction with machines that we sometime forget it is part of the convention. By recombining our remaining assumptions, we will be able to solve the self-calibration problem by measuring breaches in this latter assumption according to each digit.</p>
+<p>We assumed all along that a button can only have one and only meaning - yellow or grey. This assumption could barelly be formulated before because colors were visibly assigned on the buttons, it was too obvious to be noticed. The assumption that one button equals one meaning is so ingrained in our interaction with machines that we sometime forget it is part of the convention. By recombining our remaining assumptions, we will be able to solve the self-calibration problem by measuring breaches in this latter assumption according to each digit.</p>
 
-<p>Because we know that the user is trying to type 1 of the 10 possible digits, we can make hypothesis. We can imagine 10 different worlds, each with the user trying to type one specific digit. One for each of the 10 digits. Because we know the digit the user is trying to type in each of these worlds, we can easily infer the colors of the buttons using this simple reasoning: "If the user is trying to type a 1 (intent), each time the user presses a button (action), we can assign the color (meaning) of the digit 1 to that button.". Which flips around one segment of our logical chain in section 1.</p>
+<p>Because we know that the user is trying to type 1 of the 10 possible digits, we can make hypothesis. We can imagine 10 different worlds, each with the user trying to type one specific digit. One hypothetic world for each of the 10 digits. Because we know the digit the user is trying to type in each of these worlds, we can easily infer the colors of the buttons using this simple reasoning: "If the user is trying to type a 1 (intent), then each time the user presses a button (action), we can assign the color (meaning) of the digit 1 to that button.". This correspond to flipping the direction of inference in our logical chain from section 1.</p>
 
-<p>We are building 10 different ways to interpret the user usage fo the buttons. And it turn out that, because the user is try to type only one of these digits, in the other alternative realities, it will look like he uses the same buttons to mean both yellow and grey. Which is breaking our assumption, hence breaking the consistentcy of this alternative reality.</p>
+<p>By repeating this process for all digits between 0 and 9, we are left with 10 possible ways to assign colors to the buttons. And because the user is entering only one of the 10 possible digits, only one of the button-to-color maps will conform with our assumptions. For all other hypotheses, at some point during the interaction, it will look as if the user is pressing some buttons to mean both yellow and grey.</p>
 
-<p>In concrete terms, when, from the point of view of a given digit, the same button is used to mean both yellow and grey, that digit can be discarded because it is imcompatible with our assumption that one button has one and only meaning. You can visualize this process directly on the explanatory interface below.</p>
-
-<include src="src/figures/hood_3x3.html"></include>
-
-<p>Interrestingly, once the machine identified a digit, the colors of the buttons that were pressed are also identified and is propagated to all hypothesis - see the right panel after a first digit is found. With this information known, the next digit can be identified faster when those buttons are reused because all hytpothesis agree on the meaning of those buttons.</p>
-
-
-
-
-
-<p>Before getting into the details, we need to condense all this into one concept: consistency. Consistency is about following a convention, it is about being consistent with what is expected from a user in a given context. This notion of consistency is key to solving the self-calibrating problem because it is the only assumption we can safely rely on. It is an assumption that is implicit in all human-machine interaction scenarios<d-footnote>Removing the assumption of consistency would be throwing away all the principles of a user interface and would make any decision impossible. Even when allowing and accounting for user mistakes, we still assume - on average and in the long run - that the user is consistent. In such cases, we usually explicitly model user deviation from expectation (also called mistakes or inconsistencies) as noise in their action selection process.</d-footnote> - knowing the colors of the buttons or not. In this work, we not only make this assumption explicit but we make it a direct measure of the success of the interaction. So what is consistency really? consistency about what? how can we measure consistency in our PIN entering interface?</p>
-
-
-<p>Another way to summarize the assumptions from above is that: "Users are assumed to be consistent with themselves and in their interaction with the machine, both according to their intent and the context in which the interaction takes place".</p>
-
-
-
-<p>Consistency can be defined from two perspectives: (1) consistent with respect to an intent (clicking on a button of the same color as the intended digit) and (2) consistent with oneself (the same button is always used to mean the same color).</p>
-
-
-<p>So what we are doing is simply changing where we measure consistency and what we consider to be known. We assume we know what the user is trying to do so we can measure the consistency in its use of the buttons, and necause we have a limited set of possible intents, we can do that for all possible intents.</p>
-
-<p>That was quite mindblowing to me when I realized we could solve this problem in such a simple and generalizable way.</p>
-
-
-<p>In section 1, we relied only on the first version of consistency and assumed the second version to be holding true at all times. We had a model of our user and evaluated its actions based on that model to see if they acted consistently with the protocol according to each digit.</p>
-
-<p>In this section, we will do the reverse. We will assume the first is true and mesure the second type of consistency. The first one, if evaluate for each digit, can tell us about the color of the button depending on hypothesised intent of the user. Having access to button colors, can help us build a model of the user. And we can then meausre the consistency of the user from that model. A model in which the same button is used to mean both yellow and grey is a proof of inconsistency and can be discarded.</p>
-
-
-
-
-<p>Consistency can be defined as wether the user's actions are aligned with the theoretical model of the user. For example, in section 1, a user is consistent if: "if their digit is grey, they press the grey button". If they press a yellow, they are not being consistent with respect to that digit. For a given digit, this translate in: "knowing that the user wants to type a '1', and that '1' is grey, then if a user presses a grey button, they are consistent, if they press a yellow button, they are inconsistent".</p>
-
-<p>Notice how the reasoning is a bit different than in section 1. We start by saying: "knowing that the users wants to type a '1'". We make an hypothesis about the intent, and then check if the user's actions align with the expected actions from our model of the user. If it matches, we consider '1' as a plausible digit, if not, it is not plausible and we can discard it.</p>
-
-<p>Following this definition of consistency and we can rewrite the logical of section 1 with two buttons of known colors as follows: "If the user wants to type a '1' and my model of a user is that they are using the left button to mean yellow and the right button to mean grey, then when they pressed the left button, they meant yellow which was inconsistent with the model I have of the user because the digit '1' was grey and I expected them to press the right button to mean grey, thus the user is not typing a '1'."</p>
-
-<p>It is significantly more convoluted that the straitforward logics we used then, but it is exactly as valid and has the advantage of exposing the notion of consistency. Seeing the problem with this new pair of eyes is fundamental to understand the remaining of this article.</p>
-
-<p>Having introduced consistency, we have not yet tackled the self-calibration problem. In the description above, the model of the user is already known. We expect the user to use the left button to mean yellow and the right button to mean grey. But when buttons have no colors, this part of our user model is not known.</p>
-
-<p>If we do not have a user model, we have two choices: (1) we can make hypotheses about all possible user models and test them against observed user's actions, or (2) we can build models on the fly from the observations we make of the user's actions.</p>
-
-<p>Option (1) would quickly run into combinatioral issues as, in additional to considering all possible user's intents, we should also consider all possible button-to-color mappings. It would remain manageable with the 9 buttons used in <a href="#interaction-2">Interaction 2</a> with <d-math>2^9=512</d-math> possible user models. But it would become impossible to handle in section 3 when we move to continuous actions. Actions being never twice the same, the combinatoriality of user models will grow with the number of interaction (<d-math>N</d-math>) in <d-math>2^N</d-math>, and more importantly consistency will be impossible to assess due to a lack of constraints. We will come back to this notion of constraints.</p>
-
-<p>Option (2) sounds more interesting. Because we can observe the user's actions, we should be able to build a model of the user while the interaction unfolds. One problem remain: how can we build a model of a user if we do not know their intent, that is if we do not know what their actions mean? Constraints from the context tell us that the user's intent is to type 1 out of 10 possible digits. Thus, by assuming the user behaves consistently according to its intent, we can hypothesise and build as many models of the user as the set of possible intents. Compared to option (1), we do not have to build all possible models, but just as many as hypothesised intents, in our case only 10.</p>
-
-<p>To sum up, we are bulding as many models of the user as possible intents. Each model predicting what the user might do next according to intent the  model was built from. From this model, we can evaluate the consistency of future user's actions. If a new observation deviate from the expectation from a model, then either the user is being inconsistent with his preivous self which can only indicate that the intent hypothesis used to build the model was wrong because our assumption is that the user is consistent.</p>
-
-<p>Pluging this back to our logical statement: "If the user wants to type a '1', we can revisit the past history of its actions and build a model of the user as if they wanted to type a '1'. Then, when the user presses the next button, we can check wether their action is consistent with the model we just built with respect to the current color of the digit '1'. If yes, the user could be trying to type a 1, if not the user is certainly not trying to type a 1." </p>
-
-<p>In very concrete terms, when, according to a given hypothesis, the same button seems to be used to mean both yellow and grey, the hypothesis can be discarded because it is imcompatible with our assumption of user consistency.</p>
-
-<p>You can visualize this process directly on the <a href="#explanation-2">explanatory interface</a> below that displays a dedicated side panel showing the inner workings of the machine. As before, a tutorial video is available.</p>
+<p>In other words, when, from the point of view of a given digit, the same button has been used to mean both yellow and grey, then that digit can not be the one the user has in mind because it is imcompatible with our assumption that one button has one and only meaning. You can visualize this process directly on the explanatory interface below.</p>
 
 <include src="src/figures/hood_3x3.html"></include>
 
-<p>Interrestingly, once the machine identified a digit, the colors of the buttons that were pressed are also identified. It allows to freeze some part of the user model by coloring the corresponding buttons with their associated colors, and the next digit can be identified faster if those buttons are reused.</p>
+<p>It is interresting to see how alternative interpretation of the same user's actions remain valid quite far into the identification process.</p>
 
-<p>The remaining of this article expands on this idea of consistency but consider how to scale it to continuous user's actions. Buttons' presses are discrete and easily idenfiable actions which makes it easy to build a model and measure user's consistency. If you use the same button to mean both yellow and grey you are inconsistent. But when the user's actions are drawings, sounds, brain signals, or nerve impulses, they will never be represented twice in exactly the same way. This makes the problem more challenging as boolean logic will not be sufficient anymore. Lucklily, assumptions of consistency are paramount in machine learning algorithms and are directly expressed in their cost functions. We will exploit this to our advantage.</p>
+<p>Notice also how, once the machine identified one digit, the colors of the buttons you pressed are displayed on the buttons and propagated to all hypotheses - see the right panel after a first digit is found. It becomes much easier to identify the next digits when those buttons are cliked again because we can reuse the reasoning of <a href="#section-1">section 1</a> with buttons of known colors.</p>
 
-<p>In the next section, you will discover a version of our interface with no buttons. Instead you will place points on a 2D map and you will get to decide which areas are associated to which color.</p>
+<p>This implies that the reasoning of <a href="#section-1">section 1</a> is equivalent to the reasoning of this section when all hypothesis agree on the button's colors. <a href="#section-1">Section 1</a> was only a particular case, and we can reframe it as follows: "If the user is trying to type a 1, and if the color of the button the user is pressing is different from the color applied on digit 1, then the user is trying to use the same button to express two differents colors. Thus the user is not trying to enter the digit 1. Else they might be typing a 1". Convoluted but stricly equivalent and a powerfull way to reframe human-machine interaction scenarios that enabled us to exploit a hidden assumption to solve the self-calibration challenge.</p>
+
+<p>The remaining of this article considers how to scale this logic to continuous user's actions. In the next section, you will discover a version of our interface with no buttons. Instead you will place points on a 2D map and you will get to decide which areas are associated with which color.</p>
