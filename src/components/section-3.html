@@ -2,7 +2,28 @@
 <h2>Can this approach scale to continuous signals?</h2>
 
 
-<p>Up to now, we considered discrete button presses and our logic was based on identifying if the user was using the <b>same</b> button (action) for different colors (meaning). This notion of <b>same</b> was easily measurable with button events. But when the user's actions are more complex, such as drawings, sounds, gestures, brain signals, or nerve impulses, the same action will never be represented twice in exactly the same way. It becomes impossible to define a notion of same preemptively, and our boolean reasonning can no more be applied. Lucklily, similarity measures are paramount in machine learning and are directly encoded in classifiers' cost functions. We will exploit this to our advantage.</p>
+<p>Up to now, we considered discrete button presses and our logic was based on identifying if the user was using the <b>same</b> button (action) for different colors (meaning). This notion of <b>same</b> was easily measurable with discrete button events. But when the user's actions are more complex, such as drawings, sounds, gestures, brain signals, or nerve impulses, the same action will never be represented twice in exactly the same way, they are continuous signals. It becomes impossible to define a notion of same preemptively, and our boolean reasoning can no more be applied.</p>
+
+<p>To explain this problem, we designed an interface with no button. Instead of pressing buttons, you have to place points on a map. The points can be placed in a yellow area to mean "My digit is yellow", or in a grey are to mean "My digit is grey". In the spirit of self-calibrating interfaces, the color mapping is nor defined in advance. You decide in your mind which areas of the maps are yellow or grey and the machine will figure it out after some time.</p>
+
+<p>You can try this below on <a href="#interaction-3">Interaction 3</a>. Start simple, for example typing the code 1234 by assuming the left part of the map is yellow and the right part is grey. Once you are comfortable with this new interaction method, feel free to challenge the machine with more complex mappings. We recommend watching the associated video if unsure about what to do.</p>
+
+<include src="src/figures/vault_touch.html"></include>
+
+<p>Points on a map are an example of continuous signals. You never clicked twice exactly on the same place. This means we cannot tell is two points represent the same color just by looking at them, even more so in the beginning when no structure has emerged from the data. Ask a friend to guess what you are doing and they will be clueless. So how are we to solve that problem?</p>
+
+<p>To ground our explanation, we first need to squeeze the concepts covered so far into one word: consistency. This will help our brain to lock on something. All we have done so far is measuring the consistency of the user when using our interface, and more precisely detecting breaches of consistency:</p>
+
+<ul>
+    <li>In <a href="#section-1">section 1</a>, we defined consistency as clicking on a button of the same color as the digit one wants to type. And a breach of consistency was looking for all digits that were not of the same color as the button the user clicked on.</li>
+    <li>In <a href="#section-2">section 2</a>, we defined consistency as using a button to only mean one color - "yellow or grey". And a breach of consistency was looking for a digit for which, if the user was entering it, they would have been pressing the same button to mean both yellow and grey.</li>
+</ul>
+
+<p>Now you guessed it, to scale our approach to continuous signals, we have to find a way to define and measure consistency. Previously we used boolean logic to define consistency with statement like "a button of the <b>same</b> color" and "only mean one color - yellow <b>or</b> grey"</p>. But the notion of same and or are no more applicable.We will use machine learning classifier to solve this problem.</p>
+
+
+<p>Luckily, similarity measures are paramount in machine learning and are directly encoded in classifiers' cost functions. We will exploit this to our advantage.</p>
+
 
 
 

@@ -1,7 +1,6 @@
-p {
+p, ol, li{
   text-align: justify
 }
-
 
 .note {
   font-size: 13px;

@@ -1,10 +1,10 @@
 <p>Interfaces are everywhere. They enable us to convey our intent to machines. Typically, buttons are to be pressed and the letters printed on them indicate what they do. But are the letters always necessary? In this article, we demonstrate how a machine can respond appropriately to users' inputs without knowing exactly what they mean.</p>
 
-<p>To explore this question, we designed a PIN-entering interface that will follow us throughout our journey. You will use it to type a 4-digit PIN of your choice. But instead of pressing directly on each digits, you will press buttons that inform the machine of the colors associated to your digits. The  machine will be able to identify your PIN via a process of elimination. Which will quickly look like magic when colors won't be pre-assigned to each button, but instead assigned by you on the fly and undisclosed to the machine.</p>
+<p>To explore this question we designed a PIN-entering interface. You will use it to type a 4-digit PIN of your choice. But instead of pressing directly on each digits, like at an ATM, you will rather press colored buttons that inform the machine of the color currently associated to your digit. The  machine will be able to identify your PIN via a process of elimination. Which will quickly look like magic when colors won't be pre-assigned to each button, but instead assigned by you on the fly and undisclosed to the machine.</p>
 
 <p>Before providing an <a href="#overview">overview</a> of this article, we think you should first be introduced to this interface.</p>
 
-<p>The interface can be broken down into three parts. The top part is where your 4-digit PIN will be dispayed. The middle part shows all digits from 0 to 9 colored in either yellow or grey. The bottom part is for user interaction, for now it contains two buttons, one yellow and one grey. Think of the machine asking you: "What color is your digit?". Looking at the digit you want to enter, you answer: "My digit is yellow/grey" by clicking on the corresponding button.</p>
+<p>The interface can be broken down into three parts. The top part is where your 4-digit PIN will be displayed. The middle part shows all digits from 0 to 9 colored in either yellow or grey. The bottom part is for user interaction, for now it contains two buttons, one yellow and one grey. Think that the machine is asking you: "What color is your digit?". Looking at the digit you want to enter, you answer: "My digit is yellow/grey" by clicking on the corresponding button.</p>
 
 <include src="src/figures/interface_breakdown.html"></include>
 
@@ -20,14 +20,8 @@
 <a id="overview"></a>
 <h1>Overview</h1>
 
-<!-- <p>An interface sits between a user and the machine they want to control. Its purpose is to convey the user's intent to the machine, which can then act accordingly. Our interface purpose is to transmit your PIN to the machine. Think of an ATM machine, entering your PIN allows the machine to validate you are the owner of the credit card.</p> -->
 
-<!-- <p>Think about the remote control of your TV. It is just a plastic box with buttons. The buttons are to be pressed and the letters printed on them indicate what they do. The physical action of pressing the button printed with '1' is transcribed into an electronic signal that is understood by the TV to display channel 1.</p> -->
-
-<!-- <p> This ability for a machine to translate user's actions into their meanings seems paramount for an interface to work. How could a machine respond to some commands if it does not know what those commands mean?</p> -->
-
-
-<p>In <a href="#interaction-1">Interaction 1</a>, we conveyed our intent to the machine via two big brightly colored buttons. The colors indicate what the buttons mean to both the machine and the user. The ability to translate our button presses into their meanings seems paramount for any interface to work.</p>
+<p>In <a href="#interaction-1">Interaction 1</a>, we conveyed our intent to the machine via two big brightly colored buttons. The colors indicate what the buttons mean to both the machine and the user. This ability to translate button presses into their meanings seems essential for any interface to work.</p>
 
 <p>In this article, we question this assumptions and ask: could a machine respond to user commands without knowing what those commands mean? Concretely, could our interface identify your PIN without knowing the colors of the buttons in advance? We showcase and decipher such a machine below using different versions of our interface. The plan is as follow:</p>
 
@@ -35,15 +29,22 @@
 
   <li>In <a href="#section-1">section 1</a>, we analyse the interface as presented in <a href="#interaction-1">Interaction 1</a> and identify the various components at play.</li>
 
-  <li>In <a href="#section-2">section 2</a>, we present the self-calibrating version of our interface. The buttons loose their pre-assigned colors. You will get to decide of the colors in your mind and use the interface as such. The machine will nonetheless figure out your PIN, as well as the color of each button. We will decipher how it works and refine our mental model to include what we learned.</li>
+  <li>In <a href="#section-2">section 2</a>, we present the self-calibrating version of our interface. The buttons loose their pre-assigned colors. You will decide the buttons' colors in your mind and use them as such. The machine will nonetheless figure out your PIN, as well as the color of each button. We will decipher how it works and refine our mental model to include what we learned.</li>
 
   <li>In <a href="#section-3">section 3</a>, we scale our approach to continuous user's actions. A challenging task because it requires to train a classifier without access to known labels. To showcase this, our interface will no longer have buttons. You will place points on a 2D map and decide which areas are associated to which colors.</li>
 
-  <li>In <a href="#section-4">section 4</a>, we demonstrate the use of higher-level interaction modalities. You will enter your PIN by drawing small sketches and using spoken commands. Once again, you will get to decide what sketches or sounds you want to use, and the machine will identify both your PIN and a classifier mapping your actions to their meanings.</li>
+  <li>In <a href="#section-4">section 4</a>, we demonstrate the use of richer interaction modalities. You will enter your PIN by drawing small sketches and using spoken commands. Once again, you will get to decide what sketches or sounds you want to use, and the machine will identify both your PIN and a classifier mapping your actions to their meanings.</li>
 
   <li>In <a href="#section-5">section 5</a>, we present previous academic work on the subject, position this work into the human-computer interface and machine-learning landscape, highlight some remaining challenges, and ask ourselves how this work can be useful with concrete examples from brain-computer interfaces to the study of language formation.</li>
 
 </ol>
+
+<!-- <p>An interface sits between a user and the machine they want to control. Its purpose is to convey the user's intent to the machine, which can then act accordingly. Our interface purpose is to transmit your PIN to the machine. Think of an ATM machine, entering your PIN allows the machine to validate you are the owner of the credit card.</p> -->
+
+<!-- <p>Think about the remote control of your TV. It is just a plastic box with buttons. The buttons are to be pressed and the letters printed on them indicate what they do. The physical action of pressing the button printed with '1' is transcribed into an electronic signal that is understood by the TV to display channel 1.</p> -->
+
+<!-- <p> This ability for a machine to translate user's actions into their meanings seems paramount for an interface to work. How could a machine respond to some commands if it does not know what those commands mean?</p> -->
+
 
 <!-- <p class="note">We purposefully limited our use of scientific references and mathematical notation in section 1 to 4. We aim to make this discussion accessible to readers with various background. Section 5 will discuss related work and remaining challenges in a more formal and technical style.</p> -->
 
