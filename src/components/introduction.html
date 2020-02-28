@@ -2,13 +2,13 @@
 
 <p>To explore this question we designed a PIN-entering interface. You will use it to type a 4-digit PIN of your choice. But instead of pressing directly on each digits, like at an ATM, you will rather press colored buttons that inform the machine of the color currently associated to your digit. The  machine will be able to identify your PIN via a process of elimination. Which will quickly look like magic when colors won't be pre-assigned to each button, but instead assigned by you on the fly and undisclosed to the machine.</p>
 
-<p>Before providing an <a href="#overview">overview</a> of this article, we think you should first be introduced to this interface.</p>
+<p>Before providing an <a href="#overview">overview</a> of this article, we think you should first try the interface.</p>
 
-<p>The interface can be broken down into three parts. The top part is where your 4-digit PIN will be displayed. The middle part shows all digits from 0 to 9 colored in either yellow or grey. The bottom part is for user interaction, for now it contains two buttons, one yellow and one grey. Think that the machine is asking you: "What color is your digit?". Looking at the digit you want to enter, you answer: "My digit is yellow/grey" by clicking on the corresponding button.</p>
+<p>The interface can be broken down into three parts. The top part is where your 4-digit PIN will be displayed. The middle part shows all digits from 0 to 9 colored in either yellow or grey. The bottom part is for user interaction, for now it contains two buttons, one yellow and one grey. The machine is asking you: "What color is your digit?". Looking at the digit you want to enter, you answer: "My digit is yellow/grey" by clicking on the corresponding button.</p>
 
 <include src="src/figures/interface_breakdown.html"></include>
 
-<p>For example, if your PIN is a very secure 1234. You would start by typing the first digit of our PIN<d-footnote>As indicated by the dark frame around the left most digit in the top of <a href="#figure-1">Figure 1</a></d-footnote>, that is a 1. Because the digit 1 is currently colored in yellow, you click on the yellow button. The machine can immediately discard all the grey digits, and infer that the first digit of your PIN is either 1, 3, 4, 5, or 6. The digit's colors will then change, and by repeating the process a few times the machine will identify your first digit with certainty before carrying on with the second one.</p>
+<p>For example, if your PIN is 1234. You would start by typing the first digit of our PIN<d-footnote>As indicated by the dark frame around the left most digit in the top of <a href="#figure-1">Figure 1</a></d-footnote>, that is a 1. Because the digit 1 is currently colored in yellow, you click on the yellow button. The machine can immediately discard all the grey digits, and infer that the first digit of your PIN is either 1, 3, 4, 5, or 6. The digit's colors will then change, and by repeating the process a few times the machine will identify your first digit with certainty before carrying on with the second one.</p>
 
 <p>Entering a code yourself is the best way to understand. Try entering 1234 or any PIN of your choice below in <a href="#interaction-1">Interaction 1</a>.</p>
 

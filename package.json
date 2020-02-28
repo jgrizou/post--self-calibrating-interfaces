@@ -19,8 +19,8 @@
     "include": "^1.1.0"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.3",
-    "parcel-plugin-static-files-copy": "^2.0.0",
-    "posthtml-include": "^1.2.0"
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-static-files-copy": "^2.3.1",
+    "posthtml-include": "^1.4.0"
   }
 }
