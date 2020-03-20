@@ -4,11 +4,14 @@
 
 <p>Even when we are able to choose the way to use an interface, there usually is an explicit process for expressing that choice. We would first have to assign a color to each button using another interface (say a digital painting brush to color each button yellow or grey) and only then we could start using the interface following our coloring. In other words, there would be a dedicated and well defined interface to tell the machine the action-to-meaning mapping we want to use. But it is not the case here. The interface is self-calibrating, it understands both the digit and the colors at once, which differs from other adaptive human-computer interfaces. We will come back to this point later in section 5. For now, we ought to understand how we solve this problem.</p>
 
+<p>Option (1) would quickly run into combinatioral issues as, in additional to considering all possible user's intents, we should also consider all possible button-to-color mappings. It would remain manageable with the 9 buttons used in <a href="#interaction-2">Interaction 2</a> with <d-math>2^9=512</d-math> possible user models. But it would become impossible to handle in section 3 when we move to continuous actions. Actions being never twice the same, the combinatoriality of user models will grow with the number of interaction (<d-math>N</d-math>) in <d-math>2^N</d-math>, and more importantly consistency will be impossible to assess due to a lack of constraints. We will come back to this notion of constraints.</p>
 
 <p>Because the machine knows the colors applied on the digits<d-footnote>Curious minds might be asking how the machine decides what colors to apply on the digits. It is indeed a very stimulating problem but let's put it on the side for now and pretend we live in a world where the colors magically appear on the digits. We will discuss planning in section 5.</d-footnote>, when you click on the grey button, it can immediately discard all the yellow digits. By repeating the process 3 or 4 times, it can identify with certainty your first digit, and move to the second one.</p>
 
 
 <p>
+
+  Our consistency metric is the likelihood of the labelled data under a trained SVM classifier with a RBF kernel, and our statistical test is based on the minimum pairwise normalized likelihood between hypotheses, with a decision threshold of 0.9. 
 
 In the end, one could say that there is nothing ground breaking in the way we solve this problem. We collect a dataset with a set of possible labels and we try to decide which set of labels best fit with the data. To do that we train and test the classifier on the data and pick the labels leading to the highest likelihood. And this is essentially what we do. The take home message is understand that there is a set of problem outthere that map to this.
 

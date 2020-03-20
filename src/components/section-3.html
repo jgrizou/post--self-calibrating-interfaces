@@ -5,7 +5,7 @@
 
 <p>To explain this problem, we designed an interface with no button. Instead of pressing buttons, you have to place points on a map. The points can be placed in a yellow area to mean "My digit is yellow", or in a grey area to mean "My digit is grey". But the color map is not defined in advance. You decide in your mind which areas of the maps are yellow or grey and the machine have to figure it out along with your PIN.</p>
 
-<p>You can try this below on <a href="#interaction-3">Interaction 3</a>. Start simple, for example typing the code 1234 by assuming the left part of the map is yellow and the right part is grey. Once you are comfortable with this new interaction method, feel free to challenge the machine with more complex mappings. We recommend watching the associated video if unsure about what to do.</p>
+<p>You can try this below on <a href="#interaction-3">Interaction 3</a>. Start simple, for example typing the code 1234 by assuming the left part of the map is yellow and the right part is grey. Be patient, this is a hard problem, it might take 10 to 15 clicks to find the first digit. Once you are comfortable with this new interaction method, feel free to challenge the machine with more complex mappings. We recommend watching the associated video if unsure about what to do.</p>
 
 <include src="src/figures/vault_touch.html"></include>
 
@@ -14,148 +14,51 @@
 <p>To ground our explanation, we first need to squeeze the concepts covered so far into one word: consistency. This will help our brains to navigate this chapter. All we have done so far is measuring the consistency of the user when using our interface, and more precisely detecting breaches of consistency:</p>
 
 <ul>
-    <li>In <a href="#section-1">section 1</a>, we defined consistency as: clicking on a button of the same color as the digit we wants to type. And a breach of consistency was looking for digits that were not of the same color as the button the user clicked on.</li>
-    <li>In <a href="#section-2">section 2</a>, we defined consistency as: using a button to only mean one color - the "yellow or grey" assumption. And a breach of consistency was looking for a digit for which, if the user was entering it, they would have been pressing the same button to mean both yellow and grey.</li>
+    <li>In <a href="#section-1">section 1</a>, we defined consistency as: clicking on a button of the same color as the digit we want to type. And a breach of consistency was looking for digits that were not of the same color as the button clicked by the user.</li>
+    <li>In <a href="#section-2">section 2</a>, we defined consistency as: using a button to only mean one color - the "yellow or grey" assumption. And a breach of consistency was looking for the digits which, if the user was entering them, they would have been pressing the same button to mean both yellow and grey.</li>
 </ul>
 
-<p>To scale our approach to continuous signals, we simply need a way to define and measure consistency for these signals. Previously we define consistency with statement like "a button of the <b>same</b> color" and "only mean one color - yellow <b>or</b> grey". But the notion of "same" and "or" are no more applicable, we need a more looser measure of similarity between signals.</p>
+<p>To scale our approach to continuous signals, we simply need a way to define and measure consistency for continuous signals. Previously we defined consistency with statements like "a button of the <b>same</b> color" and "only mean one color - yellow <b>or</b> grey". But the notion of "same" and "or" are no more applicable, we need a more looser measure of similarity between signals.</p>
 
 <p>While we cannot be in the mind of every person using this interface, we can nonetheless come up with broad principles of how most people should behave when deciding how to allocate colors and place points on the 2D map. For example, we can assume that users will define yellow and grey areas that are easy to differentiate - to be able to remember where to place a yellow or a grey point when required. Another common assumption is that the user will place points of the same color "close" to each others, where closeness is measured by the euclidean distance between them.</p>
 
 <p>We can summarize these assumptions by defining consistency for continuous signals as: using a simple action-to-meaning mapping. Where simple is defined by the ability to easily  differentiate between the yellow and grey points.</p>
 
-<p>But how do we measure that?</p>
+<p>How can we measure that?</p>
 
-<p>Machine learning experts invented <a href="https://en.wikipedia.org/wiki/Statistical_classification">classifiers</a>. Given a set of colored points (the training set), a classifier can extrapolate and generate a color map that "best explains" the training set. Obviously, a number of assumptions must be made by machine learning experts to define this "best explains" criteria. They form the cost functions that the classifiers are optimizing during their learning procedure.</p>
+<p>Machine learning experts invented <a href="https://en.wikipedia.org/wiki/Statistical_classification">classifiers</a>. Given a set of colored points (the training set), a classifier can extrapolate and generate a color map that "best explains" the training set. Obviously, a number of assumptions must be made by machine learning experts to define this "best explains" criteria. These assumptions are baked into the cost functions that the classifiers are optimizing during their learning procedure.</p>
 
 <p>A common assumption is that the simpler the map the better<d-footnote>See <a href="https://en.wikipedia.org/wiki/Occam%27s_razor">Occam's razor</a> principle and the <a href="https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff">bias–variance tradeoff</a> in machine learning.</d-footnote>. This assumption is usually included as a <a href="https://en.wikipedia.org/wiki/Regularization_(mathematics)">regularization</a> term in the cost function to penalize solutions that leads to complicated maps. Complicated maps are maps that are not smooth with many sharp changes on their frontiers or that form a lot of isolated island.</p>
 
-<p>How elegant. The assumptions baked into classifiers are the same as what we defined as consistency for continuous signals. Thinking twice, it is not that strange. These assumptions are made by humans trying to make sense of the world, they are meant to reflect the way we generate and classify things in the world.</p>
+<p>How elegant. The assumptions baked into classifiers are the same as what we defined as consistency for our problem with continuous signals. Thinking twice, it is not that strange. These assumptions are made by humans trying to make sense of the world, they are meant to reflect the way we generate and classify things in the world.</p>
 
+<p>How can we leverage classifiers to solve the self-calibration problem?</p>
 
+<p>This is both easy and hard.</p>
 
-<p>We have seen that the common assumption used in all interactive work is that users are being consistent. They use the same actions to mean the same things and use the appropriate meaning to express their intent according to a given context. By directly measuring the user consitency with respect to each possible intents, we were able to solve the self-calibration problem.</p>
+<p>It is easy because ass explained above classifiers provides us with a direct measure of consistency. Good measures include the cross-validation classification accuracy of a dataset, or the value of the cost function after training. Other metrics can be imagined as easily within the broad spectrum of machine learning tools.</p>
 
-<p>When using buttons, it is easy to measure when a user "use the same actions to mean the same things" because pressing of buttons are discrete events. It is easy to know when a user press the same button twice because the button is unique, has a fixed location in space, and triggers the same event.</p>
+<p>The hard part is to decide when to stop. Because this is not a binary process, we can never be 100% sure of the right answer. But we can run a comparative evaluation. Because we know the user is entering 1 of 10 digits, we have 10 hypotheses. As before, we can generate 10 different datasets, each with the same data points but different labels/colors. We then measure the consistency of each datasets using the metrics of our choice. And finally run our preferred statistical test and define a threshold for which we can claim that one hypothesis is statistically more consistent than all the others.<d-footnote>To be of real practical use, the very hard part is to decide when to stop in a way that is not too disruptive with the user experience. For that, the machine would have to be most the time correct without exhausting the patience of the user. Sometimes it is be better to be wrong fast than to never be right because the user gave up. This is harder to put into words, let alone in equation, and could be the subject to plenty of interesting research.</d-footnote></p> 
 
-<p>But that is not always the case. User interfaces come in all sort of shapes and people have been interested to use more natural means of interaction to communicate with the machine around us. Using speach (think of Siri, Alexa, Google Voice), gestures (think Kinect), brain signals (think severy handicap persons that can no more move), muscles contractions (think people with missing limbs in need to control a prosthetic limb). The list is long.</p>
-
-<p>Those signals have the specificity of never being twice exactly the same. The recording of brain signals for example is done on tens of electrode at the same time, measuring signals in the uV range that are noisy and perturbed by the envrionement around them. There no way in a million years that we will record twice the same stream of signals from those electrodes.</p>
-
-<p>Thus we can no more use the following logic: "use the same actions to mean the same things" because all users actions look different now. A all branch of machine learnign is dedicated to that problem, it is called classification. Classification is the process of finding rules that allows to identify group of signals that have the same meaning, called class.</p>
-
-
-<p>Explain the idea of a map of colors with a drawing.</p>
-
-<include src="src/figures/vault_touch.html"></include>
-
-
-<p>
-
-Interestingly, consistency is an assumtion that powers most, if not all, machine learning algorithms, in a similar way as the Occam's razor principle. This assumtions of consistency is directly encoded in the cost functions that are optimized in both supervised and unsupersived learning problems. We will come back to this is more details, but
-
-We build a model from what if see and then test that model on what we see next. Which one is better able to predict what we do next, it is assumed to be the good one. Because we assume the user is consistent shared assumtion with all machine learning paradigms.
-
-Talk about calibration
-</p>
-
-
-<p>It turns out that these algorithms all run on the assumption that the datas have some sort of consistency. That signals that have the same class are more similar to each others than from signals of an other class. That they form groups in a way. And that assumption is indeed what we naturally do when trying to group things.</p>
-
-
-<p>IMAGE OF CLASSIFICATION</p>
-
-
-<p>Concretely, if a user uses speach to interact with our interface and uses the sounds "yellow" to mean yellow and the sound "grey" to mean grey. If the when the user repeat twice the sounds "yellow" it does create the exact same waveform as the pitch, duration, intonation will inevatibly vary. But we would assume two things that the user is consistent in using the word "yellow" and "grey" when they want to mean yellow and grey, and that the sounds "yellow" are more similar to each others than to the sounds "grey". It turns out classifier can help us to identify that similarity.</p>
-
-<p>To train a classifier you need two things. Data and labels. Data are the raw signals and are described as a vector of values, and labels are a unique identifiers for each class (yellow or grey). The problem we are facing in the self-calibration problem is that we do not have any training set, any data,labels pair before the interaction starts. Thus we cannot create a claasifier, thus we cannot know what the user means, thus we cannot infer their intent. A bit like in the button case when there was no colors associated to the buttons. And like in the button case, the classical solution is to resort to a calibration period were the user is following instruction accroding to a known protocol to build a dataset with known labels (a bit like the painting brush interface we refered to in section 2). The dataset is used to train a classifier, which is used in the interface as the function that translate user's actions to meanings.</p>
-
-<p>We will resort in the same trick as in section two to remove the need for this calibration procedure. To estimate the consistency of a user, we need to have a model of the user, this model will be a classifier here, we cannot build a model because we do not have a training dataset. But we have a set of possible intents the user might want to achieve, thus we can build as many dataset as there is possible intent (10 in our PIN entering device). Thus we can build 10 differetns classifiers from the data.</p>
-
-
-
-<p>But how will we measure consistency then? If I build a model from data, surely the model will just represent my data exactly. But the good thing about classifier is that they can generalise, they can predict the class of a signal thay have never seen before. This ability to makew prediction is areas of the feature space and the assumption that powers it, are what enables us to sort out the consistent dataset from the non consistent one</p>
-
-<p>In short, because of the constraints that apply to the interaction (that is our context, of entrign a PIN by feedback on color), we can build 10 alternative interpreation fo the data, which translate into 10 alternative trainign set, 10 alternatvie classifier. The question is then, which one of those classifier make more sense? Which one is able to make the better prediction? Which one represents a more consistent user? By consistency we mean which hypothesis is representing a user that use similar signals signals ot mean the same things?</p>
-
-<p>An classifer are built to do just that and the all discussion about underfitting and overfitting really only talk about the right level of consistency in the data we should expect. If we thing the data should be easily differentiable, we more strict cost on the regularization terms should not be a problem, aif we think the data are very close, the frontiers is highly non linear, and could maybe overlap, then a bit less regularization could be wise. Meta method to decide on this have develop via cross-validation, which allow to automatically train the best classifier for a given set of data.</p>
-
-<p>To test the quality of a classifier we can compute the likelihood of the data under the model. The highest the likelihood, the better the data are aligned with the trained model, the less effort he algorithm need to fit the classifier, hence the more consistent they are. The lowest the likelihood, the more effort it took to fit the classifier, the less the data are straiforward to fit, the less the data are consistent. And to be more precise we can compute the likelihood using a cross validatino procedure too.Thus this time the comparison between each huypothesis cannot be done with aboslute certainy as boolean logic does not prevail, rather each hytpothesis is assigned a probbaility and some statistical decision has to be made to decide when an bhypothesis is considered more consistent that all other hypothesis with very high probability. But implementation details do not matter for now, there are very interesting for expert in the domain and references will be provided in section 5. </p>
-
-<p>That is it really, we train 10 classifiers on the same data but with different labels. We test the accuracy of each classifier and decide that the best classifier is the one associated to the true intent of the user because bu seing the world through that intent, our model of the user is consistent, but not for the other alternative hypothesis. Consistency once again is key.</p>
-
-<p>You can visualize this all proces on the interactive explanation below. Try to challenge the machine with color maps that are hard to identify, especially by not using well separated cluster fo points.</p>
+<p>This is how we solve self-calibration problem in the 2D map interface you tried above. We link to previous work explaining the implementation details in section 5. For now, the all process is very easy to understand visually from the side panel of explanatory interface 3 below. Try it and notice how each hypothesis assign different labels to your actions. As a result, each hypothesis builds a different color map to explain your actions. After enough clicks, it becomes obvious which digit you are typing because all others hypotheses lead to more complex maps - indicating a breach in our definition of consistency for continuous signals: using a simple action-to-meaning mapping.</p>
 
 <include src="src/figures/hood_touch.html"></include>
 
+<p>I personally find this demo the most compelling in this article. Trying to challenge it with complex color maps, or trying to force false prediction, is a good exercise to verify you understand what is happening.</p>
+
+<p>There is two very important and counter-intuitive facts that machine-learning connoisseurs should understand from this demo:</p>
+
+<ul>
+    <li>We do not use any sort of unsupervised clustering algorithms. This is best demonstrated by the demo in this video and in the resulting image below. Using the interface with two clearly defined clusters one on the right and one o the left. But the color split is actually top and bottom. Any attempts to use of unsupervised clustering approach would fail with these data.</li>
+    <p>Before moving to the next section, we should talk about unsupervised learning. Like we discussed in section 2 about the possibility to geenrate coupled hypothesis on the intent+action to meaning, the same idea could be brought back here by first using a clusterign algrotihm to find clusters and then consider all combinations of class for these clusters. The combinatoriality could rise really quickly indeed. But more importantly it would be a very limited approach in the real word as clustering require a lot more data that our apporahc requires, and it simply does not work well when the data are very close or overlapping. Clusteting is an extreme case of using consistency as an assumption as it requires relaitvely well separated data. The approach presented here is more powerful because we actually use labels, and labe can inform us ont he strcuture of the data in way unsupervide clustering cannot. We will come back to this point in section 5.</p>
+
+    <li>Once the first digit is identified, the map can still be changed significantly. This differs from usual work where first a calibration phase is done to collect labeled data and train a classifier. And then the classifier is used to interpret the signals. Here we never use directly the precision from a particular classifier to make our decision, but we compare the quality of 10 different classifiers to decide which on is the most likely to be explain the user. This is best described by typing by defining three areas on the map. Left/Middle/Right. For the first digit, we use the left area for yellow, and the middle for grey. We do not use the right area. Once the first digit is found, we type the second digit by continuing using the middle area for grey, but by now using the right area for yellow, and never using again the left area. If we were freezing and using the best classifier learned during the learning of the first digit, all click in the right area would be predicted to be grey. But with our method, the machine is not disturbed, does not over generalize and can identify the correct digit and learn that the right area is actually used to mean yellow.</li>
+    <p>A important thing to note is how we realocated all the labels once we have identified the first digit. When we are sure about the digit, we are sure of the labels, thus we can propagate them to all hypothesis, they are a common truth. But all subsequent user's actions will have again different interpreatation according to each hypothesis, driving away the classifiers again, but making it faster for the machine to identify the solution as one grey point in the middle of a yellow pool of dot, will be a strog sign of insocnsitencies.</p>
+
+</ul>
+
 <p>LINK TO ALL DEMO VIDEOS showing the crazy thing we can do</p>
-
-
-<p>A important thing to note is how we realocated all the labels once we have identified the first digit. When we are sure about the digit, we are sure of the labels, thus we can propagate them to all hypothesis, they are a common truth. But all subsequent user's actions will have again different interpreatation according to each hypothesis, driving away the classifiers again, but making it faster for the machine to identify the solution as one grey point in the middle of a yellow pool of dot, will be a strog sign of insocnsitencies.</p>
-
-
-<p>Before moving to the next section, we should talk about unsupervised learning. Like we discussed in section 2 about the possibility to geenrate coupled hypothesis on the intent+action to meaning, the same idea could be brought back here by first using a clusterign algrotihm to find clusters and then consider all combinations of class for these clusters. The combinatoriality could rise really quickly indeed. But more importantly it would be a very limited approach in the real word as clustering require a lot more data that our apporahc requires, and it simply does not work well when the data are very close or overlapping. Clusteting is an extreme case of using consistency as an assumption as it requires relaitvely well separated data. The approach presented here is more powerful because we actually use labels, and labe can inform us ont he strcuture of the data in way unsupervide clustering cannot. We will come back to this point in section 5.</p>
-
-<p>Learning both a classifier and the intent.</p>
 
 <p>Now that we could solve the self-calibration problem with continuous user signals, the pandora box is fully openned. A big game in machien learning is to represetnt he data int he form of vectors that can be used by these algrothms. So a lot of work has been done to represent speech, drawings, gestures, brain signals, and about all you can think about.</p>
 
 <p>In the next section, we demonstrate the use of drawing and speech to enter a pin in our interface, entering firmly in the space of language learning and providing concrete examples of what self-calibrating devices can do.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>Before moving to the next section, we need to condense all this into one concept: consistency. Consistency is about following a convention, it is about being consistent with what is expected in a given context. This notion of consistency is key to solving the self-calibrating problem because it is the only assumption we can safely rely on. It is an assumption that is implicit in all human-machine interaction scenarios<d-footnote>Even when allowing and accounting for user mistakes, one still assumes - on average and in the long run - that the user is consistent. We usually explicitly model user deviation from expectation (also called mistakes or inconsistencies) as noise in their action selection process. Removing the assumption of consistency would be throwing away all the principles of a user interface and would make any decision impossible.</d-footnote> - knowing the colors of the buttons or not. In this work, we not only make this assumption explicit but we make it a direct measure of the success of the interaction. So what is consistency really? consistency about what? how can we measure consistency in our PIN entering interface?</p>
-
-
-<p>Another way to summarize the assumptions from above is that: "Users are assumed to be consistent with themselves and in their interaction with the machine, both according to their intent and the context in which the interaction takes place".</p>
-
-
-
-<p>Consistency can be defined from two perspectives: (1) consistent with respect to an intent (clicking on a button of the same color as the intended digit) and (2) consistent with oneself (the same button is always used to mean the same color).</p>
-
-
-<p>So what we are doing is simply changing where we measure consistency and what we consider to be known. We assume we know what the user is trying to do so we can measure the consistency in its use of the buttons, and necause we have a limited set of possible intents, we can do that for all possible intents.</p>
-
-<p>That was quite mindblowing to me when I realized we could solve this problem in such a simple and generalizable way.</p>
-
-
-<p>In section 1, we relied only on the first version of consistency and assumed the second version to be holding true at all times. We had a model of our user and evaluated its actions based on that model to see if they acted consistently with the protocol according to each digit.</p>
-
-<p>In this section, we will do the reverse. We will assume the first is true and mesure the second type of consistency. The first one, if evaluate for each digit, can tell us about the color of the button depending on hypothesised intent of the user. Having access to button colors, can help us build a model of the user. And we can then measure the consistency of the user from that model. A model in which the same button is used to mean both yellow and grey is a proof of inconsistency and can be discarded.</p>
-
-<p>Consistency can be defined as wether the user's actions are aligned with the theoretical model of the user. For example, in section 1, a user is consistent if: "if their digit is grey, they press the grey button". If they press a yellow, they are not being consistent with respect to that digit. For a given digit, this translate in: "knowing that the user wants to type a '1', and that '1' is grey, then if a user presses a grey button, they are consistent, if they press a yellow button, they are inconsistent".</p>
-
-<p>Notice how the reasoning is a bit different than in section 1. We start by saying: "knowing that the users wants to type a '1'". We make an hypothesis about the intent, and then check if the user's actions align with the expected actions from our model of the user. If it matches, we consider '1' as a plausible digit, if not, it is not plausible and we can discard it.</p>
-
-<p>Following this definition of consistency and we can rewrite the logical of section 1 with two buttons of known colors as follows: "If the user wants to type a '1' and my model of a user is that they are using the left button to mean yellow and the right button to mean grey, then when they pressed the left button, they meant yellow which was inconsistent with the model I have of the user because the digit '1' was grey and I expected them to press the right button to mean grey, thus the user is not typing a '1'."</p>
-
-<p>It is significantly more convoluted that the straitforward logics we used then, but it is exactly as valid and has the advantage of exposing the notion of consistency. Seeing the problem with this new pair of eyes is fundamental to understand the remaining of this article.</p>
-
-<p>Having introduced consistency, we have not yet tackled the self-calibration problem. In the description above, the model of the user is already known. We expect the user to use the left button to mean yellow and the right button to mean grey. But when buttons have no colors, this part of our user model is not known.</p>
-
-<p>If we do not have a user model, we have two choices: (1) we can make hypotheses about all possible user models and test them against observed user's actions, or (2) we can build models on the fly from the observations we make of the user's actions.</p>
-
-<p>Option (1) would quickly run into combinatioral issues as, in additional to considering all possible user's intents, we should also consider all possible button-to-color mappings. It would remain manageable with the 9 buttons used in <a href="#interaction-2">Interaction 2</a> with <d-math>2^9=512</d-math> possible user models. But it would become impossible to handle in section 3 when we move to continuous actions. Actions being never twice the same, the combinatoriality of user models will grow with the number of interaction (<d-math>N</d-math>) in <d-math>2^N</d-math>, and more importantly consistency will be impossible to assess due to a lack of constraints. We will come back to this notion of constraints.</p>
-
-<p>Option (2) sounds more interesting. Because we can observe the user's actions, we should be able to build a model of the user while the interaction unfolds. One problem remain: how can we build a model of a user if we do not know their intent, that is if we do not know what their actions mean? Constraints from the context tell us that the user's intent is to type 1 out of 10 possible digits. Thus, by assuming the user behaves consistently according to its intent, we can hypothesise and build as many models of the user as the set of possible intents. Compared to option (1), we do not have to build all possible models, but just as many as hypothesised intents, in our case only 10.</p>
-
-<p>To sum up, we are bulding as many models of the user as possible intents. Each model predicting what the user might do next according to intent the  model was built from. From this model, we can evaluate the consistency of future user's actions. If a new observation deviate from the expectation from a model, then either the user is being inconsistent with his preivous self which can only indicate that the intent hypothesis used to build the model was wrong because our assumption is that the user is consistent.</p>
-
-<p>Pluging this back to our logical statement: "If the user wants to type a '1', we can revisit the past history of its actions and build a model of the user as if they wanted to type a '1'. Then, when the user presses the next button, we can check wether their action is consistent with the model we just built with respect to the current color of the digit '1'. If yes, the user could be trying to type a 1, if not the user is certainly not trying to type a 1." </p>
-
-<p>In very concrete terms, when, according to a given hypothesis, the same button seems to be used to mean both yellow and grey, the hypothesis can be discarded because it is imcompatible with our assumption of user consistency.</p>
-
-<p>Lucklily, assumptions of consistency are paramount in machine learning algorithms and are directly expressed in classifiers' cost functions. We will exploit this to our advantage.</p>
